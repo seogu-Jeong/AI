@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산대학교 물리학과 | PNU Physics</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        velvet: { dark: '#1A0B0C', base: '#4A0E17', light: '#722F37' },
+                        gold: { base: '#D4AF37', light: '#F5D76E' }
+                    },
+                    fontFamily: { sans: ['Pretendard', 'serif'] },
+                    animation: { 'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(40px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#FCFBF9] text-velvet-dark antialiased flex flex-col min-h-screen">
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gold-base/20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 bg-velvet-base rounded flex items-center justify-center shadow-lg"><span class="text-gold-light font-serif italic font-bold text-xl">P</span></div>
+                <h1 class="font-bold text-xl text-velvet-dark leading-none">부산대학교 <span class="text-velvet-base">물리학과</span></h1>
+            </a>
+            <div class="hidden lg:flex space-x-8 font-medium text-sm text-velvet-base/80 tracking-wide">
+                <a href="/about" class="hover:text-gold-base transition-colors py-2">학과소개</a>
+                <a href="/faculty" class="hover:text-gold-base transition-colors py-2">교수진</a>
+                <a href="/research" class="hover:text-gold-base transition-colors py-2">연구분야</a>
+                <a href="/admissions" class="hover:text-gold-base transition-colors py-2">입학안내</a>
+                <a href="/academics" class="hover:text-gold-base transition-colors py-2">학사정보</a>
+                <a href="/community" class="px-5 py-2.5 bg-velvet-base text-gold-light rounded hover:bg-velvet-dark transition-all">커뮤니티</a>
+            </div>
+        </div>
+    </nav>
+    <section class="relative min-h-[90vh] flex items-center justify-center velvet-pattern text-center px-4">
+        <div class="relative z-10 animate-fade-in-up max-w-4xl">
+            <p class="text-gold-base font-serif italic text-xl mb-6 tracking-widest">Excellence in Physics</p>
+            <h1 class="text-5xl lg:text-7xl font-bold text-white tracking-tight mb-8">우주의 비밀을 해독하는<br><span class="gold-gradient-text font-serif italic">가장 우아한 학문</span></h1>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/about" class="px-10 py-4 bg-gold-base text-velvet-dark font-bold rounded shadow-lg hover:bg-gold-light transition-all">물리학과 소개</a>
+                <a href="/research" class="px-10 py-4 bg-transparent border border-gold-base/50 text-gold-light font-bold rounded hover:bg-gold-base/10 transition-all">연구분야 보기</a>
+            </div>
+        </div>
+    </section>
+    <section class="py-32 bg-[#FCFBF9] relative z-20 -mt-10 rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.3)]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-3 gap-12">
+            <a href="/research" class="block bg-white p-10 rounded-xl velvet-shadow border border-velvet-base/5 hover:border-gold-base/30 transition-all transform hover:-translate-y-2">
+                <div class="w-14 h-14 bg-velvet-base rounded-full flex items-center justify-center mb-8"><span class="text-gold-base text-2xl font-serif">R</span></div>
+                <h4 class="text-2xl font-bold text-velvet-dark mb-4">혁신적 연구</h4>
+                <p class="text-velvet-dark/60 leading-relaxed italic">The Frontier of Knowledge</p>
+            </a>
+            <a href="/faculty" class="block bg-white p-10 rounded-xl velvet-shadow border border-velvet-base/5 hover:border-gold-base/30 transition-all transform hover:-translate-y-2">
+                <div class="w-14 h-14 bg-velvet-base rounded-full flex items-center justify-center mb-8"><span class="text-gold-base text-2xl font-serif">F</span></div>
+                <h4 class="text-2xl font-bold text-velvet-dark mb-4">석학 교수진</h4>
+                <p class="text-velvet-dark/60 leading-relaxed italic">World-Class Educators</p>
+            </a>
+            <a href="/academics" class="block bg-white p-10 rounded-xl velvet-shadow border border-velvet-base/5 hover:border-gold-base/30 transition-all transform hover:-translate-y-2">
+                <div class="w-14 h-14 bg-velvet-base rounded-full flex items-center justify-center mb-8"><span class="text-gold-base text-2xl font-serif">A</span></div>
+                <h4 class="text-2xl font-bold text-velvet-dark mb-4">체계적 학사</h4>
+                <p class="text-velvet-dark/60 leading-relaxed italic">Advanced Curriculum</p>
+            </a>
+        </div>
+    </section>
+    <footer class="bg-velvet-dark text-white/50 py-16 mt-auto border-t-[4px] border-gold-base text-center">
+        <h5 class="text-gold-base text-2xl font-serif italic mb-2">PNU Physics</h5>
+        <p class="text-sm">부산광역시 금정구 부산대학로63번길 2 (장전동)</p>
+    </footer>
+</body>
+</html>

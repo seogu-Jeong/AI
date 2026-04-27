@@ -205,6 +205,7 @@ class MainWindow(QMainWindow):
             "📅  경제 캘린더",
             "🎯  모의 투자",
             "⚖️  종목 비교",
+            "₿  코인 분석",
             "⚙️  설정"
         ]
         
@@ -219,9 +220,9 @@ class MainWindow(QMainWindow):
         return sidebar
         
     def _create_pages(self):
-        # Add 11 placeholder widgets first
+        # Add 12 placeholder widgets first
         self._placeholders = []
-        for _ in range(11):
+        for _ in range(12):
             ph = QWidget()
             self.stack.addWidget(ph)
             self._placeholders.append(ph)
@@ -237,7 +238,8 @@ class MainWindow(QMainWindow):
             7: lambda: self._make_macro_page(),
             8: lambda: self._make_paper_page(),
             9: lambda: self._make_compare_page(),
-            10: lambda: self._make_settings_page(),
+            10: lambda: self._make_crypto_page(),
+            11: lambda: self._make_settings_page(),
         }
         
         # Pre-load first two pages only
@@ -306,6 +308,10 @@ class MainWindow(QMainWindow):
     def _make_compare_page(self):
         from ui.pages.compare_page import ComparePage
         return ComparePage(self.db_session)
+
+    def _make_crypto_page(self):
+        from ui.pages.crypto_page import CryptoPage
+        return CryptoPage(self.db_session, self.paper_svc)
 
     def _make_settings_page(self):
         from ui.pages.settings_page import SettingsPage

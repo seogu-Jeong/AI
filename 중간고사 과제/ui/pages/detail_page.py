@@ -354,8 +354,8 @@ class DetailPage(QWidget):
         analysis_row.setSpacing(12)
 
         # Left: Attention Heatmap
-        heatmap_outer, heatmap_body = _win98_panel("TRANSFORMER ATTENTION WEIGHTS")
-        h_sub = QLabel("24개 팩터 중요도 (Explainable AI)")
+        heatmap_outer, heatmap_body = _win98_panel("Transformer 어텐션 가중치 (설명 가능한 AI)")
+        h_sub = QLabel("24개 팩터별 AI 예측 기여도")
         h_sub.setStyleSheet(f"font-size: 10px; color: {COLORS['text_secondary']};")
         heatmap_body.addWidget(h_sub)
         self.heatmap = AttentionHeatmap()
@@ -406,7 +406,7 @@ class DetailPage(QWidget):
         lstm_body.addSpacing(4)
 
         tech_header = QLabel("기술적 지표 현황")
-        tech_header.setStyleSheet(f"font-size: 10px; font-weight: 700; color: {COLORS['accent']}; text-transform: uppercase;")
+        tech_header.setStyleSheet(f"font-size: 12px; font-weight: 700; color: {COLORS['accent']};")
         lstm_body.addWidget(tech_header)
         lstm_body.addSpacing(4)
 
@@ -418,13 +418,12 @@ class DetailPage(QWidget):
         ]
         for label_text, attr_name in tech_indicators:
             row = QHBoxLayout()
-            lbl = QLabel(label_text + ' ?')
-            lbl.setFixedWidth(80)
+            lbl = QLabel(label_text)
+            lbl.setFixedWidth(90)
             lbl.setToolTip(TOOLTIPS.get(label_text, label_text))
-            lbl.setStyleSheet('font-size: 10px; color: #000080;')
-            lbl.setCursor(Qt.WhatsThisCursor)
+            lbl.setStyleSheet('font-size: 12px; color: #000080;')
             val = QLabel("--")
-            val.setStyleSheet(f"font-size: 10px; font-weight: 700; color: {COLORS['text_primary']};")
+            val.setStyleSheet(f"font-size: 12px; font-weight: 700; color: {COLORS['text_primary']};")
             setattr(self, attr_name, val)
             row.addWidget(lbl)
             row.addWidget(val)
@@ -434,7 +433,7 @@ class DetailPage(QWidget):
         # Fundamental snapshot section
         lstm_body.addSpacing(10)
         fund_header = QLabel("펀더멘털 스냅샷")
-        fund_header.setStyleSheet(f"font-size: 10px; font-weight: 700; color: {COLORS['accent']}; text-transform: uppercase;")
+        fund_header.setStyleSheet(f"font-size: 12px; font-weight: 700; color: {COLORS['accent']};")
         lstm_body.addWidget(fund_header)
         lstm_body.addSpacing(4)
 
@@ -442,18 +441,17 @@ class DetailPage(QWidget):
             ("PER", "ind_per"),
             ("PBR", "ind_pbr"),
             ("ROE", "ind_roe"),
-            ("EPS Growth", "ind_eps"),
-            ("Op Margin", "ind_opm"),
+            ("EPS 성장률", "ind_eps"),
+            ("영업이익률", "ind_opm"),
         ]
         for label_text, attr_name in fund_indicators:
             row = QHBoxLayout()
-            lbl = QLabel(label_text + ' ?')
-            lbl.setFixedWidth(80)
+            lbl = QLabel(label_text)
+            lbl.setFixedWidth(90)
             lbl.setToolTip(TOOLTIPS.get(label_text, label_text))
-            lbl.setStyleSheet('font-size: 10px; color: #000080;')
-            lbl.setCursor(Qt.WhatsThisCursor)
+            lbl.setStyleSheet('font-size: 12px; color: #000080;')
             val = QLabel("--")
-            val.setStyleSheet(f"font-size: 10px; font-weight: 700; color: {COLORS['text_primary']};")
+            val.setStyleSheet(f"font-size: 12px; font-weight: 700; color: {COLORS['text_primary']};")
             setattr(self, attr_name, val)
             row.addWidget(lbl)
             row.addWidget(val)
@@ -674,24 +672,24 @@ class DetailPage(QWidget):
             if d in ['UP', 'BUY']:
                 row['icon'].setText("↗")
                 row['icon'].setStyleSheet(f"font-size: 16px; font-weight: 800; color: {COLORS['bull']};")
-                row['text'].setText("BULLISH")
-                row['text'].setStyleSheet(f"font-size: 11px; font-weight: 600; color: {COLORS['bull']};")
+                row['text'].setText("상승")
+                row['text'].setStyleSheet(f"font-size: 12px; font-weight: 700; color: {COLORS['bull']};")
                 row['bar'].setValue(75)
                 row['bar'].setStyleSheet(f"QProgressBar::chunk {{ background-color: {COLORS['bull']}; }}")
                 row['conf'].setText("75%")
             elif d in ['DOWN', 'SELL']:
                 row['icon'].setText("↘")
                 row['icon'].setStyleSheet(f"font-size: 16px; font-weight: 800; color: {COLORS['bear']};")
-                row['text'].setText("BEARISH")
-                row['text'].setStyleSheet(f"font-size: 11px; font-weight: 600; color: {COLORS['bear']};")
+                row['text'].setText("하락")
+                row['text'].setStyleSheet(f"font-size: 12px; font-weight: 700; color: {COLORS['bear']};")
                 row['bar'].setValue(65)
                 row['bar'].setStyleSheet(f"QProgressBar::chunk {{ background-color: {COLORS['bear']}; }}")
                 row['conf'].setText("65%")
             else:
                 row['icon'].setText("→")
                 row['icon'].setStyleSheet(f"font-size: 16px; font-weight: 800; color: {COLORS['neutral']};")
-                row['text'].setText("NEUTRAL")
-                row['text'].setStyleSheet(f"font-size: 11px; font-weight: 600; color: {COLORS['neutral']};")
+                row['text'].setText("중립")
+                row['text'].setStyleSheet(f"font-size: 12px; font-weight: 700; color: {COLORS['neutral']};")
                 row['bar'].setValue(40)
                 row['bar'].setStyleSheet(f"QProgressBar::chunk {{ background-color: {COLORS['neutral']}; }}")
                 row['conf'].setText("40%")

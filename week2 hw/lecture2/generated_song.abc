@@ -1,0 +1,38 @@
+X:1
+T:Alexander's
+Z: id:dc-hornpipe-1
+M:4/4
+L:1/8
+K:D Major
+(3ABc|d2dA F2AF|E2EG FDFA|d2dA F2AF|E2EG FDDA|!
+
+X:2
+T:All Around The World
+Z: id:dc-hornpipe-2
+M:4/4
+L:1/8
+K:G Major
+(3def|g2gf gdBd|cBce dBGB|A2AB AGEG|DGGF G2:|!
+
+X:3
+T:Bantry Bay
+Z: id:dc-hornpipe-3
+M:4/4
+L:1/8
+K:G Major
+ga|bgag egde|gedB AGEG|D2GB AGED|G2GF G2:|!
+
+X:1
+T:Alexander's
+Z: id:dc-hornpipe-1
+M:4/4
+L:1/8
+K:D Major
+(3ABc|d2dA F2AF|E2EG FDFA|d2dA F2AF|E2EG FDDA|!
+
+X:2
+T:All Around The World
+Z: id:dc-hornpipe-2
+M:4/4
+L:1/8
+K:G

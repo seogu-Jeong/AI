@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLP XOR Web Simulator | Silicon Valley Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        canvas { image-rendering: pixelated; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="mb-8 border-b border-slate-700 pb-4 flex justify-between items-end">
+            <div>
+                <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+                    MLP XOR Neural Simulator
+                </h1>
+                <p class="text-slate-400 mt-1">Non-linear classification via Backpropagation in JS</p>
+            </div>
+            <div class="text-right">
+                <span id="epoch-display" class="text-2xl font-mono text-emerald-400">Epoch: 0</span>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left: Controls -->
+            <aside class="lg:col-span-3 space-y-6">
+                <div class="glass p-6 rounded-2xl">
+                    <h2 class="text-lg font-semibold mb-4 flex items-center">
+                        <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span> Hyperparameters
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Learning Rate (η)</label>
+                            <input type="range" id="lr-range" min="0.01" max="1.0" step="0.01" value="0.5" class="w-full accent-blue-500">
+                            <div class="flex justify-between text-xs font-mono mt-1">
+                                <span>0.01</span>
+                                <span id="lr-val" class="text-blue-400">0.50</span>
+                                <span>1.0</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Hidden Neurons</label>
+                            <select id="hidden-size" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm">
+                                <option value="2">2 Neurons</option>
+                                <option value="4" selected>4 Neurons (Ideal)</option>
+                                <option value="8">8 Neurons</option>
+                                <option value="16">16 Neurons</option>
+                            </select>
+                        </div>
+
+                        <div class="pt-4 space-y-2">
+                            <button id="train-btn" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 transition rounded-xl font-bold shadow-lg shadow-emerald-900/20">
+                                START TRAINING
+                            </button>
+                            <button id="reset-btn" class="w-full py-3 bg-slate-700 hover:bg-slate-600 transition rounded-xl font-bold">
+                                RESET WEIGHTS
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-6 rounded-2xl">
+                    <h2 class="text-lg font-semibold mb-4">Network Stats</h2>
+                    <div class="space-y-2 text-sm font-mono">
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Current Loss:</span>
+                            <span id="loss-val" class="text-red-400">0.000000</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Accuracy:</span>
+                            <span id="acc-val" class="text-emerald-400">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Center: Decision Boundary -->
+            <main class="lg:col-span-6 space-y-6">
+                <div class="glass p-4 rounded-2xl aspect-square relative flex items-center justify-center">
+                    <canvas id="boundary-canvas" width="400" height="400" class="w-full h-full rounded-lg"></canvas>
+                    <div class="absolute bottom-6 right-6 flex gap-4 text-xs font-bold uppercase tracking-wider">
+                        <div class="flex items-center"><span class="w-3 h-3 bg-red-500 rounded-sm mr-2"></span> Class 1 (Target 1)</div>
+                        <div class="flex items-center"><span class="w-3 h-3 bg-blue-500 rounded-sm mr-2"></span> Class 0 (Target 0)</div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right: Loss Chart & Heatmap -->
+            <section class="lg:col-span-3 space-y-6">
+                <div class="glass p-4 rounded-2xl">
+                    <h2 class="text-sm font-bold text-slate-400 mb-2 uppercase">Training Loss (MSE)</h2>
+                    <canvas id="loss-chart" height="200"></canvas>
+                </div>
+
+                <div class="glass p-4 rounded-2xl">
+                    <h2 class="text-sm font-bold text-slate-400 mb-4 uppercase">Hidden Activations</h2>
+                    <div id="activation-grid" class="grid grid-cols-4 gap-1">
+                        <!-- Heatmap cells injected here -->
+                    </div>
+                    <div class="flex justify-between text-[10px] text-slate-500 mt-2 px-1">
+                        <span>(0,0)</span>
+                        <span>(0,1)</span>
+                        <span>(1,0)</span>
+                        <span>(1,1)</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // --- Neural Core Implementation ---
+        const sigmoid = x => 1 / (1 + Math.exp(-Math.max(-500, Math.min(500, x))));
+        const sigmoidDeriv = s => s * (1 - s);
+
+        class MLP {
+            constructor(inputSize, hiddenSize, outputSize) {
+                this.hiddenSize = hiddenSize;
+                // Xavier/Glorot Initialization
+                const limit1 = Math.sqrt(6 / (inputSize + hiddenSize));
+                this.w1 = Array.from({length: inputSize}, () => 
+                    Array.from({length: hiddenSize}, () => (Math.random() * 2 - 1) * limit1));
+                this.b1 = new Array(hiddenSize).fill(0);
+
+                const limit2 = Math.sqrt(6 / (hiddenSize + outputSize));
+                this.w2 = Array.from({length: hiddenSize}, () => 
+                    Array.from({length: outputSize}, () => (Math.random() * 2 - 1) * limit2));
+                this.b2 = new Array(outputSize).fill(0);
+            }
+
+            forward(x) {
+                // Layer 1
+                this.z1 = new Array(this.hiddenSize).fill(0);
+                for(let j=0; j<this.hiddenSize; j++) {
+                    let sum = 0;
+                    for(let i=0; i<x.length; i++) sum += x[i] * this.w1[i][j];
+                    this.z1[j] = sum + this.b1[j];
+                }
+                this.a1 = this.z1.map(sigmoid);
+
+                // Layer 2
+                let z2 = 0;
+                for(let j=0; j<this.hiddenSize; j++) z2 += this.a1[j] * this.w2[j][0];
+                z2 += this.b2[0];
+                this.a2 = sigmoid(z2);
+
+                return this.a2;
+            }
+
+            train(X, y, lr) {
+                let totalLoss = 0;
+                let correct = 0;
+                const hiddenActivations = [];
+
+                for(let i=0; i<X.length; i++) {
+                    const output = this.forward(X[i]);
+                    const target = y[i];
+                    totalLoss += Math.pow(output - target, 2);
+                    if ((output > 0.5 ? 1 : 0) === target) correct++;
+                    hiddenActivations.push([...this.a1]);
+
+                    // Backprop Output Layer
+                    const delta2 = (output - target) * sigmoidDeriv(output);
+                    const dw2 = this.a1.map(a => a * delta2);
+                    const db2 = delta2;
+
+                    // Backprop Hidden Layer
+                    const delta1 = this.a1.map((a, j) => {
+                        return (delta2 * this.w2[j][0]) * sigmoidDeriv(a);
+                    });
+
+                    const dw1 = X[i].map(xi => delta1.map(d => xi * d));
+                    const db1 = delta1;
+
+                    // Update Weights
+                    for(let j=0; j<this.hiddenSize; j++) {
+                        this.w2[j][0] -= lr * dw2[j];
+                        for(let k=0; k<X[i].length; k++) {
+                            this.w1[k][j] -= lr * dw1[k][j];
+                        }
+                        this.b1[j] -= lr * db1[j];
+                    }
+                    this.b2[0] -= lr * db2;
+                }
+
+                return { 
+                    loss: totalLoss / X.length, 
+                    accuracy: (correct / X.length) * 100,
+                    hidden: hiddenActivations
+                };
+            }
+        }
+
+        // --- UI Logic ---
+        const X_XOR = [[0,0], [0,1], [1,0], [1,1]];
+        const Y_XOR = [0, 1, 1, 0];
+        
+        let mlp = new MLP(2, 4, 1);
+        let epoch = 0;
+        let isTraining = false;
+        let animationId = null;
+
+        const canvas = document.getElementById('boundary-canvas');
+        const ctx = canvas.getContext('2d');
+        const lossChartCtx = document.getElementById('loss-chart').getContext('2d');
+
+        const lossChart = new Chart(lossChartCtx, {
+            type: 'line',
+            data: { labels: [], datasets: [{ label: 'MSE', data: [], borderColor: '#ef4444', borderWidth: 2, tension: 0.4, pointRadius: 0 }] },
+            options: { scales: { y: { type: 'logarithmic', grid: { color: '#334155' } }, x: { display: false } }, plugins: { legend: { display: false } } }
+        });
+
+        function drawBoundary() {
+            const size = canvas.width;
+            const imgData = ctx.createImageData(size, size);
+            
+            for(let py=0; py<size; py++) {
+                for(let px=0; px<size; px++) {
+                    const x = px / size;
+                    const y = (size - py) / size;
+                    const val = mlp.forward([x, y]);
+                    
+                    const idx = (py * size + px) * 4;
+                    // Colormap: Blue to Red
+                    imgData.data[idx] = val * 255;      // R
+                    imgData.data[idx+1] = 100;         // G
+                    imgData.data[idx+2] = (1-val) * 255; // B
+                    imgData.data[idx+3] = 200;         // A
+                }
+            }
+            ctx.putImageData(imgData, 0, 0);
+
+            // Draw data points
+            X_XOR.forEach((pt, i) => {
+                ctx.beginPath();
+                ctx.arc(pt[0]*size, size - pt[1]*size, 8, 0, Math.PI*2);
+                ctx.fillStyle = Y_XOR[i] === 1 ? '#ef4444' : '#3b82f6';
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.fill();
+                ctx.stroke();
+            });
+        }
+
+        function updateHeatmap(hiddenData) {
+            const grid = document.getElementById('activation-grid');
+            grid.innerHTML = '';
+            // hiddenData is [4 samples][N neurons]
+            // We'll transpose it to show N neurons over 4 samples
+            const neurons = hiddenData[0].length;
+            for(let n=0; n<neurons; n++) {
+                for(let s=0; s<4; s++) {
+                    const val = hiddenData[s][n];
+                    const cell = document.createElement('div');
+                    cell.className = 'h-6 rounded-sm transition-colors duration-200';
+                    cell.style.backgroundColor = `rgba(52, 211, 153, ${val})`; // Emerald base
+                    cell.title = `N${n+1}, S${s+1}: ${val.toFixed(2)}`;
+                    grid.appendChild(cell);
+                }
+            }
+        }
+
+        function trainLoop() {
+            if(!isTraining) return;
+
+            const lr = parseFloat(document.getElementById('lr-range').value);
+            let result;
+            
+            // Speed up: run 50 epochs per frame
+            for(let i=0; i<50; i++) {
+                result = mlp.train(X_XOR, Y_XOR, lr);
+                epoch++;
+            }
+
+            // Update UI
+            document.getElementById('epoch-display').innerText = `Epoch: ${epoch}`;
+            document.getElementById('loss-val').innerText = result.loss.toFixed(6);
+            document.getElementById('acc-val').innerText = `${result.accuracy}%`;
+            
+            if(epoch % 100 === 0) {
+                lossChart.data.labels.push(epoch);
+                lossChart.data.datasets[0].data.push(result.loss);
+                if(lossChart.data.labels.length > 50) {
+                    lossChart.data.labels.shift();
+                    lossChart.data.datasets[0].data.shift();
+                }
+                lossChart.update('none');
+            }
+
+            drawBoundary();
+            updateHeatmap(result.hidden);
+            animationId = requestAnimationFrame(trainLoop);
+        }
+
+        // --- Event Listeners ---
+        document.getElementById('train-btn').addEventListener('click', (e) => {
+            isTraining = !isTraining;
+            e.target.innerText = isTraining ? 'PAUSE TRAINING' : 'RESUME TRAINING';
+            e.target.classList.toggle('bg-emerald-600');
+            e.target.classList.toggle('bg-amber-600');
+            if(isTraining) trainLoop();
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            const hSize = parseInt(document.getElementById('hidden-size').value);
+            mlp = new MLP(2, hSize, 1);
+            epoch = 0;
+            lossChart.data.labels = [];
+            lossChart.data.datasets[0].data = [];
+            lossChart.update();
+            drawBoundary();
+            document.getElementById('epoch-display').innerText = `Epoch: 0`;
+            document.getElementById('loss-val').innerText = '0.000000';
+            document.getElementById('acc-val').innerText = '0%';
+        });
+
+        document.getElementById('lr-range').addEventListener('input', (e) => {
+            document.getElementById('lr-val').innerText = parseFloat(e.target.value).toFixed(2);
+        });
+
+        // Init
+        drawBoundary();
+    </script>
+</body>
+</html>

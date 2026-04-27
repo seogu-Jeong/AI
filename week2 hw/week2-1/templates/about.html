@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>학과소개 | PNU Physics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { velvet: { dark: '#1A0B0C', base: '#4A0E17', light: '#722F37' }, gold: { base: '#D4AF37' } } } } }
+    </script>
+</head>
+<body class="bg-[#FCFBF9] text-velvet-dark antialiased flex flex-col min-h-screen">
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-xl border-b border-gold-base/20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex justify-between items-center text-sm font-medium">
+            <a href="/" class="flex items-center space-x-3"><div class="w-10 h-10 bg-velvet-base rounded flex items-center justify-center shadow-lg"><span class="text-gold-base font-bold">P</span></div><h1 class="font-bold text-xl text-velvet-dark">부산대 <span class="text-velvet-base font-light">물리학과</span></h1></a>
+            <div class="hidden lg:flex space-x-8">
+                <a href="/about" class="text-gold-base font-bold">학과소개</a><a href="/faculty" class="hover:text-gold-base">교수진</a><a href="/research" class="hover:text-gold-base">연구분야</a><a href="/admissions" class="hover:text-gold-base">입학안내</a><a href="/community" class="px-4 py-2 bg-velvet-base text-gold-base rounded">커뮤니티</a>
+            </div>
+        </div>
+    </nav>
+    <header class="pt-32 pb-20 velvet-pattern text-center shadow-xl"><h1 class="text-4xl lg:text-5xl font-bold text-white mb-4">학과소개</h1><p class="text-gold-base font-serif italic text-lg tracking-widest">History & Vision</p></header>
+    <main class="flex-grow max-w-4xl mx-auto px-6 py-24">
+        <div class="bg-white p-12 rounded-2xl velvet-shadow border border-velvet-base/5">
+            <h2 class="text-3xl font-bold text-velvet-dark mb-8 border-l-4 border-gold-base pl-4 italic font-serif">Foundations of Physics</h2>
+            <p class="text-lg text-velvet-dark/80 leading-loose mb-10">1953년 설립된 부산대학교 물리학과는 세계 기초과학 발전을 선도하고 미래를 창조할 물리학도를 양성해왔습니다.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-velvet-dark/70">
+                <div class="p-6 bg-velvet-base/5 rounded-lg border-l-2 border-gold-base"><strong>창의적 연구:</strong> 우주와 물질의 본질을 탐구합니다.</div>
+                <div class="p-6 bg-velvet-base/5 rounded-lg border-l-2 border-gold-base"><strong>탁월한 교육:</strong> 기초부터 최신 이론까지 아우릅니다.</div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-velvet-dark text-white/50 py-12 text-center border-t border-gold-base/50"><p>&copy; 2026 PNU Physics.</p></footer>
+</body>
+</html>

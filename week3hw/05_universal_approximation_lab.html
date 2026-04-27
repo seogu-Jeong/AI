@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Approximation Lab | Silicon Valley Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.0/math.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        :root { --accent: #6366f1; --bg: #030712; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #f8fafc; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); }
+        .slider-thumb::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; background: var(--accent); cursor: pointer; border-radius: 50%; border: 3px solid #fff; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-10">
+    <div class="max-w-7xl mx-auto space-y-8">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+                    Universal Approximation Lab
+                </h1>
+                <p class="text-slate-400 mt-2 font-medium">Mathematical proof via hidden layer neurons</p>
+            </div>
+            <div class="glass px-6 py-3 rounded-2xl flex items-center gap-6">
+                <div class="text-center">
+                    <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Current MSE</p>
+                    <p id="mse-val" class="text-xl font-bold mono text-indigo-400">0.0000</p>
+                </div>
+                <div class="w-px h-8 bg-slate-700"></div>
+                <div class="text-center">
+                    <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Total Params</p>
+                    <p id="params-val" class="text-xl font-bold mono text-emerald-400">0</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left: Sidebar Controls -->
+            <aside class="lg:col-span-3 space-y-6">
+                <div class="glass p-8 rounded-3xl shadow-2xl space-y-8">
+                    <!-- Target Function -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-300 mb-4 uppercase tracking-wider">Target Function</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <button onclick="setTarget('sine')" class="target-btn active px-4 py-3 rounded-xl text-left text-sm font-semibold transition bg-indigo-600 border-indigo-500">Sine Wave</button>
+                            <button onclick="setTarget('step')" class="target-btn px-4 py-3 rounded-xl text-left text-sm font-semibold transition bg-slate-800 border-slate-700 hover:bg-slate-700">Step Function</button>
+                            <button onclick="setTarget('complex')" class="target-btn px-4 py-3 rounded-xl text-left text-sm font-semibold transition bg-slate-800 border-slate-700 hover:bg-slate-700">Complex Oscillator</button>
+                        </div>
+                    </div>
+
+                    <!-- Neuron Count -->
+                    <div>
+                        <div class="flex justify-between items-end mb-4">
+                            <label class="text-sm font-bold text-slate-300 uppercase tracking-wider">Neuron Width (N)</label>
+                            <span id="neuron-display" class="text-2xl font-bold text-indigo-400 mono">10</span>
+                        </div>
+                        <input type="range" id="neuron-slider" min="1" max="100" value="10" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer slider-thumb">
+                        <p class="text-[11px] text-slate-500 mt-3 leading-relaxed">
+                            Increasing neurons improves accuracy but may lead to high-frequency artifacts (overfitting).
+                        </p>
+                    </div>
+
+                    <!-- Activation -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-300 mb-4 uppercase tracking-wider">Activation (σ)</label>
+                        <select id="activation-select" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 transition outline-none">
+                            <option value="tanh">Hyperbolic Tangent (Tanh)</option>
+                            <option value="sigmoid">Sigmoid (Logistic)</option>
+                            <option value="relu">Rectified Linear (ReLU)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="glass p-6 rounded-3xl border-indigo-500/20">
+                    <h3 class="text-xs font-bold text-indigo-400 uppercase mb-2">Architect's Note</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        This simulator uses <strong>Ridge Regression</strong> to solve for output weights instantly, mirroring the "Cybenko Proof" logic where basis functions are combined linearly.
+                    </p>
+                </div>
+            </aside>
+
+            <!-- Main Display: Plots -->
+            <main class="lg:col-span-9 space-y-6">
+                <!-- Main Approximation Plot -->
+                <div class="glass p-6 rounded-3xl overflow-hidden shadow-inner">
+                    <div id="main-plot" class="w-full h-[450px]"></div>
+                </div>
+
+                <!-- Decomposition Plot (The "Bumps") -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass p-6 rounded-3xl h-[300px]">
+                        <h3 class="text-sm font-bold text-slate-400 uppercase mb-4">Neuron Decomposition</h3>
+                        <div id="basis-plot" class="w-full h-full"></div>
+                    </div>
+                    <div class="glass p-8 rounded-3xl flex flex-col justify-center">
+                        <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                            <span class="w-3 h-3 bg-indigo-500 rounded-full animate-pulse"></span>
+                            The Theorem (Cybenko, 1989)
+                        </h3>
+                        <p class="text-sm text-slate-400 italic mb-6 leading-relaxed">
+                            "Let σ be a non-constant, bounded, and continuous function. Given any continuous function f on a compact set and ε > 0, there exists a hidden layer N such that the sum of these basis functions approximates f with error less than ε."
+                        </p>
+                        <div class="p-4 bg-indigo-500/10 rounded-xl border border-indigo-500/20">
+                            <code class="text-indigo-300 font-bold block text-center">| f(x) - Σ wᵢ σ(vᵢ x + bᵢ) | < ε</code>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // --- Core Simulation Logic ---
+        let currentTarget = 'sine';
+        const xData = math.range(0, 1, 0.005).toArray();
+        
+        const targets = {
+            sine: x => Math.sin(2 * Math.PI * x),
+            step: x => x < 0.5 ? 0 : 1,
+            complex: x => Math.sin(2 * Math.PI * x) + 0.5 * Math.sin(4 * Math.PI * x) + 0.3 * Math.cos(6 * Math.PI * x)
+        };
+
+        const activations = {
+            tanh: x => Math.tanh(x),
+            sigmoid: x => 1 / (1 + Math.exp(-x)),
+            relu: x => Math.max(0, x)
+        };
+
+        function simulate() {
+            const nNeurons = parseInt(document.getElementById('neuron-slider').value);
+            const actName = document.getElementById('activation-select').value;
+            const phi = activations[actName];
+            
+            document.getElementById('neuron-display').innerText = nNeurons;
+            document.getElementById('params-val').innerText = nNeurons * 3 + 1;
+
+            // Generate random fixed input weights and biases
+            // Seeded randomness for consistency
+            Math.seedrandom = (s) => {
+                let mask = 0xffffffff;
+                let m_w = (123456789 + s) & mask;
+                let m_z = (987654321 - s) & mask;
+                return () => {
+                    m_z = (36969 * (m_z & 65535) + (m_z >> 16)) & mask;
+                    m_w = (18000 * (m_w & 65535) + (m_w >> 16)) & mask;
+                    return (((m_z << 16) + (m_w & 65535)) >>> 0) / 4294967296;
+                };
+            };
+            const random = Math.seedrandom(42);
+
+            const V = Array.from({length: nNeurons}, () => (random() * 40 - 20)); // Scale for frequency
+            const B = Array.from({length: nNeurons}, () => (random() * 20 - 10)); // Scale for shift
+
+            // Build Design Matrix H (samples x neurons)
+            const yTrue = xData.map(targets[currentTarget]);
+            const H = xData.map(x => V.map((v, i) => phi(v * x + B[i])));
+
+            // Solve for output weights W using Ridge Regression (H'H + λI)W = H'y
+            const HT = math.transpose(H);
+            const HTH = math.multiply(HT, H);
+            const lambda = 0.0001;
+            const identity = math.multiply(math.identity(nNeurons), lambda);
+            const inv = math.inv(math.add(HTH, identity));
+            const HTy = math.multiply(HT, yTrue);
+            const W = math.multiply(inv, HTy);
+
+            // Inference
+            const yPred = H.map(row => math.dot(row, W));
+            const mse = math.mean(xData.map((_, i) => Math.pow(yTrue[i] - yPred[i], 2)));
+            document.getElementById('mse-val').innerText = mse.toFixed(6);
+
+            // Individual Basis Functions (The "Bumps")
+            const basisLines = V.map((v, i) => {
+                return xData.map(x => W[i] * phi(v * x + B[i]));
+            });
+
+            updatePlots(yTrue, yPred, basisLines);
+        }
+
+        function updatePlots(yTrue, yPred, basisLines) {
+            // Main Plot
+            const mainTrace1 = { x: xData, y: yTrue, name: 'Target Function', line: { color: '#6366f1', width: 4 }, type: 'scatter' };
+            const mainTrace2 = { x: xData, y: yPred, name: 'NN Approximation', line: { color: '#f43f5e', width: 3, dash: 'dot' }, type: 'scatter' };
+            
+            const layout = {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: '#94a3b8', family: 'Plus Jakarta Sans' },
+                margin: { t: 20, b: 40, l: 40, r: 20 },
+                xaxis: { gridcolor: '#1e293b' },
+                yaxis: { gridcolor: '#1e293b' },
+                legend: { orientation: 'h', x: 0, y: 1.1 }
+            };
+
+            Plotly.newPlot('main-plot', [mainTrace1, mainTrace2], layout, {responsive: true, displayModeBar: false});
+
+            // Basis Plot (Top 10 basis functions for clarity)
+            const basisTraces = basisLines.slice(0, 10).map((line, i) => ({
+                x: xData, y: line, line: { width: 1.5, opacity: 0.4 }, type: 'scatter', showlegend: false
+            }));
+
+            Plotly.newPlot('basis-plot', basisTraces, { ...layout, margin: {t:0,b:20,l:20,r:20} }, {responsive: true, displayModeBar: false});
+        }
+
+        function setTarget(type) {
+            currentTarget = type;
+            document.querySelectorAll('.target-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-indigo-600', 'border-indigo-500');
+                btn.classList.add('bg-slate-800', 'border-slate-700');
+            });
+            event.target.classList.add('active', 'bg-indigo-600', 'border-indigo-500');
+            simulate();
+        }
+
+        // Listeners
+        document.getElementById('neuron-slider').addEventListener('input', simulate);
+        document.getElementById('activation-select').addEventListener('change', simulate);
+
+        // Initial Run
+        simulate();
+    </script>
+</body>
+</html>

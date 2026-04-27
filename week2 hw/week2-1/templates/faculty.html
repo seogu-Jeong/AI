@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>교수진 | PNU Physics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { velvet: { dark: '#1A0B0C', base: '#4A0E17', light: '#722F37' }, gold: { base: '#D4AF37' } } } } }
+    </script>
+</head>
+<body class="bg-[#FCFBF9] text-velvet-dark antialiased flex flex-col min-h-screen">
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-xl border-b border-gold-base/20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex justify-between items-center"><a href="/" class="font-bold text-xl">PNU <span class="text-velvet-base">Physics</span></a>
+            <div class="hidden lg:flex space-x-8 text-sm font-bold uppercase tracking-wider"><a href="/about">About</a><a href="/faculty" class="text-gold-base underline">Faculty</a><a href="/research">Research</a><a href="/admissions">Admissions</a></div>
+        </div>
+    </nav>
+    <header class="pt-32 pb-20 velvet-pattern text-center"><h1 class="text-4xl lg:text-5xl font-bold text-white mb-4">교수진</h1><p class="text-gold-base font-serif italic text-lg uppercase">Renowned Faculty</p></header>
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <!-- Faculty Items (Subset for speed, based on your previous verified list) -->
+            <div class="bg-white p-8 rounded-2xl velvet-shadow border border-velvet-base/5 hover:border-gold-base/50 transition-all"><h3 class="text-xl font-bold text-velvet-dark">홍덕기 교수</h3><p class="text-gold-base text-sm font-bold mb-2">입자물리 이론</p><p class="text-xs text-velvet-dark/60 leading-relaxed italic">Particle Physics Phenomenology</p></div>
+            <div class="bg-white p-8 rounded-2xl velvet-shadow border border-velvet-base/5 hover:border-gold-base/50 transition-all"><h3 class="text-xl font-bold text-velvet-dark">유인권 교수</h3><p class="text-gold-base text-sm font-bold mb-2">핵물리 실험</p><p class="text-xs text-velvet-dark/60 leading-relaxed italic">CERN-ALICE Heavy Ion Physics</p></div>
+            <div class="bg-white p-8 rounded-2xl velvet-shadow border border-velvet-base/5 hover:border-gold-base/50 transition-all"><h3 class="text-xl font-bold text-velvet-dark">문한섭 교수</h3><p class="text-gold-base text-sm font-bold mb-2">양자광학 실험</p><p class="text-xs text-velvet-dark/60 leading-relaxed italic">Quantum Sensing & Atomic Optics</p></div>
+            <div class="bg-white p-8 rounded-2xl velvet-shadow border border-velvet-base/5 hover:border-gold-base/50 transition-all"><h3 class="text-xl font-bold text-velvet-dark">이재광 교수</h3><p class="text-gold-base text-sm font-bold mb-2">고체물리 이론</p><p class="text-xs text-velvet-dark/60 leading-relaxed italic">Computational Quantum Materials</p></div>
+            <div class="bg-white p-8 rounded-2xl velvet-shadow border border-velvet-base/5 hover:border-gold-base/50 transition-all"><h3 class="text-xl font-bold text-velvet-dark">황춘규 교수</h3><p class="text-gold-base text-sm font-bold mb-2">응집물질 실험</p><p class="text-xs text-velvet-dark/60 leading-relaxed italic">Electronic Structure (ARPES)</p></div>
+            <div class="bg-white p-8 rounded-2xl velvet-shadow border border-velvet-base/5 hover:border-gold-base/50 transition-all"><h3 class="text-xl font-bold text-velvet-dark">이미진 교수</h3><p class="text-gold-base text-sm font-bold mb-2">통계물리 이론</p><p class="text-xs text-velvet-dark/60 leading-relaxed italic">Complex Network Science</p></div>
+        </div>
+    </main>
+    <footer class="bg-velvet-dark text-white/50 py-16 text-center border-t border-gold-base"><p>&copy; 2026 PNU Physics.</p></footer>
+</body>
+</html>

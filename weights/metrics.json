@@ -1,0 +1,12 @@
+{
+    "model": "mlp",
+    "val_accuracy": 0.4477,
+    "class_distribution": {
+        "Buy": 0.891,
+        "Hold": 0.0852,
+        "Sell": 0.0237
+    },
+    "combined_loss": 0.8124,
+    "timestamp": "2026-04-25",
+    "epochs_trained": 5
+}

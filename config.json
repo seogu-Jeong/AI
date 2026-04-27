@@ -1,0 +1,15 @@
+{
+  "theme": 0,
+  "fred_key": "",
+  "sp500_count": 503,
+  "history_years": 3,
+  "eod_enabled": true,
+  "eod_hour": 18,
+  "eod_workers": 8,
+  "alert_threshold": 15.0,
+  "alert_enabled": true,
+  "w_lstm": 0.3,
+  "w_cnn": 0.25,
+  "w_transformer": 0.25,
+  "w_mlp": 0.2
+}

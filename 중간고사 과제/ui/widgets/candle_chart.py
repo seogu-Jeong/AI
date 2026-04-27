@@ -251,13 +251,31 @@ class CandleChart(FigureCanvasQTAgg):
                     seen_years.add(yr)
                     positions.append(i)
                     date_labels.append(str(yr))
-            # Append forecast ticks
             positions  += forecast_ticks
             date_labels += forecast_labels
         else:
-            step = max(1, n // 8)
-            positions   = list(range(0, n, step))
-            date_labels = [df_plot.index[i].strftime('%Y-%m') for i in positions]
+            n_days = (df_plot.index[-1] - df_plot.index[0]).days
+            positions   = []
+            date_labels = []
+            if n_days <= 45:
+                # 1M: tick every ~5 trading days, show MM/DD
+                step = max(1, n // 6)
+                positions   = list(range(0, n, step))
+                date_labels = [df_plot.index[i].strftime('%m/%d') for i in positions]
+            else:
+                # 3M / 6M: one tick per month at first trading day of each month
+                seen_months = set()
+                for i, dt in enumerate(df_plot.index):
+                    key = (dt.year, dt.month)
+                    if key not in seen_months:
+                        seen_months.add(key)
+                        positions.append(i)
+                        if n_days <= 100:
+                            # 3M: show MM/DD so months are clearly distinct
+                            date_labels.append(dt.strftime('%m/%d'))
+                        else:
+                            # 6M: show YYYY-MM
+                            date_labels.append(dt.strftime('%Y-%m'))
             positions  += forecast_ticks
             date_labels += forecast_labels
 

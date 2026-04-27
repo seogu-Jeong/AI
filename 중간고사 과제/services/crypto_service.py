@@ -236,7 +236,7 @@ class CryptoService:
             up_prob = 0.6 if dir_5d == 'UP' else (0.3 if dir_5d == 'DOWN' else 0.5)
 
         try:
-            daily_std = float(close.pct_change().std()) * price_now
+            daily_std = float(close.pct_change().std())  # fractional (e.g. 0.03 = 3%/day)
         except:
             daily_std = 0.0
 

@@ -122,6 +122,8 @@ class CryptoService:
         vol = df['Volume'].squeeze()
         volume_24h = float(vol.iloc[-1]) if not vol.empty else 0.0
 
+        forecast = CryptoService.get_lstm_forecast(df, price_now)
+
         return {
             'ticker':     ticker,
             'name':       name,
@@ -140,4 +142,105 @@ class CryptoService:
             'low_24h':    low_24h,
             'volume_24h': volume_24h,
             'history':    df,
+            'forecast':   forecast,
+            'lstm_dir_5d': forecast['dir_5d'],
+            'lstm_dir_20d': forecast['dir_20d'],
+            'lstm_dir_60d': forecast['dir_60d'],
+        }
+
+    @staticmethod
+    def get_lstm_forecast(df, price_now):
+        try:
+            close = df['Close'].squeeze()
+            high = df['High'].squeeze()
+            low = df['Low'].squeeze()
+            open_ = df['Open'].squeeze()
+            vol = df['Volume'].squeeze()
+
+            # Technical indicators
+            delta = close.diff()
+            gain = delta.clip(lower=0).ewm(com=13, adjust=False).mean()
+            loss = (-delta.clip(upper=0)).ewm(com=13, adjust=False).mean()
+            rsi_s = 100 - (100 / (1 + gain / loss.replace(0, np.nan)))
+            rsi_s = rsi_s.fillna(50.0)
+
+            ema12 = close.ewm(span=12, adjust=False).mean()
+            ema26 = close.ewm(span=26, adjust=False).mean()
+            macd_s = (ema12 - ema26)
+
+            sma20 = close.rolling(20).mean()
+            std20 = close.rolling(20).std()
+            bb_top = sma20 + 2 * std20
+            bb_bot = sma20 - 2 * std20
+            bb_p_s = (close - bb_bot) / (bb_top - bb_bot).replace(0, np.nan)
+            bb_p_s = bb_p_s.fillna(0.5).clip(0, 1)
+
+            l14 = low.rolling(14).min()
+            h14 = high.rolling(14).max()
+            stoch_s = (close - l14) / (h14 - l14).replace(0, np.nan) * 100
+            stoch_s = stoch_s.fillna(50.0)
+
+            vol_chg_s = vol.pct_change().clip(-1, 1).fillna(0)
+
+            # Normalization
+            c_mean = close.mean()
+            v_mean = vol.mean() if vol.mean() != 0 else 1.0
+
+            feat_df = pd.DataFrame()
+            feat_df['close_norm'] = close / c_mean
+            feat_df['high_norm'] = high / c_mean
+            feat_df['low_norm'] = low / c_mean
+            feat_df['open_norm'] = open_ / c_mean
+            feat_df['vol_norm'] = (vol / v_mean).clip(0, 5)
+            feat_df['rsi_norm'] = rsi_s / 100.0
+            feat_df['macd_norm'] = (macd_s / c_mean * 10).clip(-1, 1)
+            feat_df['bb_pct'] = bb_p_s
+            feat_df['stoch_norm'] = stoch_s / 100.0
+            feat_df['vol_chg_norm'] = vol_chg_s
+
+            seq_20x10 = feat_df.tail(20).values
+            if len(seq_20x10) < 20:
+                raise ValueError("Short data")
+
+            import sys, os
+            sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            from models.lstm_model import LSTMModel
+            from app_paths import get_weights_dir
+            import torch
+
+            model = LSTMModel()
+            wpath = os.path.join(str(get_weights_dir()), 'lstm_best.pt')
+            if os.path.exists(wpath):
+                model.load_state_dict(torch.load(wpath, map_location='cpu'))
+            model.eval()
+
+            res = model.predict(seq_20x10.astype(np.float32), device='cpu')
+            dir_5d = res['dir_5d']
+            dir_20d = res['dir_20d']
+            dir_60d = res['dir_60d']
+            up_prob = res['up_5d']
+
+        except Exception:
+            try:
+                rsi_v = float(rsi_s.iloc[-1])
+                macd_v = float(macd_s.iloc[-1])
+                mom_7d = float((close.iloc[-1] / close.iloc[-8] - 1) * 100) if len(close) >= 8 else 0.0
+                if rsi_v < 45 and macd_v > 0 and mom_7d > 0:
+                    dir_5d, dir_20d, dir_60d = 'UP', 'UP', 'FLAT'
+                elif rsi_v > 65 and mom_7d < 0:
+                    dir_5d, dir_20d, dir_60d = 'DOWN', 'DOWN', 'FLAT'
+                else:
+                    dir_5d, dir_20d, dir_60d = 'FLAT', 'FLAT', 'FLAT'
+            except:
+                dir_5d, dir_20d, dir_60d = 'FLAT', 'FLAT', 'FLAT'
+            up_prob = 0.6 if dir_5d == 'UP' else (0.3 if dir_5d == 'DOWN' else 0.5)
+
+        try:
+            daily_std = float(close.pct_change().std()) * price_now
+        except:
+            daily_std = 0.0
+
+        return {
+            'dir_5d': dir_5d, 'dir_20d': dir_20d, 'dir_60d': dir_60d,
+            'current_price': price_now, 'daily_std': daily_std, 'mlp_buy_prob': up_prob
         }

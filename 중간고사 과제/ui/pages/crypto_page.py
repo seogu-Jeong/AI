@@ -55,7 +55,7 @@ class CryptoPage(QWidget):
         scroll.setWidget(content)
 
         # --- HEADER ---
-        title = QLabel('₿  코인 분석')
+        title = QLabel('코인 분석')
         title.setObjectName('page_title')
         subtitle = QLabel('주요 암호화폐 기술적 AI 점수 및 모의투자')
         subtitle.setStyleSheet(f"color: {COLORS['text_secondary']}; font-size: 13px;")
@@ -151,6 +151,31 @@ class CryptoPage(QWidget):
             self._ind_labels[key] = val
             ind_grid.addLayout(col)
         detail_layout.addWidget(ind_frame)
+
+        # AI 방향 예측 panel
+        pred_lbl = QLabel('AI 방향 예측 (단타)')
+        pred_lbl.setStyleSheet('font-size: 11px; font-weight: 700; color: #000080; margin-top: 6px;')
+        detail_layout.addWidget(pred_lbl)
+
+        pred_frame = QFrame()
+        pred_frame.setStyleSheet('background-color: #ffffff; border: 1px solid #c0c0c0; padding: 4px;')
+        pred_row = QHBoxLayout(pred_frame)
+        pred_row.setSpacing(12)
+        self._pred_labels = {}
+        for horizon, key in [('5일', '5d'), ('20일', '20d'), ('60일', '60d')]:
+            col = QVBoxLayout()
+            col.setSpacing(2)
+            h_lbl = QLabel(horizon)
+            h_lbl.setStyleSheet('font-size: 10px; color: #555555;')
+            h_lbl.setAlignment(Qt.AlignCenter)
+            v_lbl = QLabel('--')
+            v_lbl.setStyleSheet('font-size: 14px; font-weight: 800; color: #000000;')
+            v_lbl.setAlignment(Qt.AlignCenter)
+            col.addWidget(h_lbl)
+            col.addWidget(v_lbl)
+            self._pred_labels[key] = v_lbl
+            pred_row.addLayout(col)
+        detail_layout.addWidget(pred_frame)
 
         # Chart
         chart_lbl = QLabel('캔들 차트 (6개월)')
@@ -326,7 +351,7 @@ class CryptoPage(QWidget):
             return
 
         d = self._coin_data[ticker]
-        self.detail_name.setText(f"₿  {d['symbol']} — {d['name']}")
+        self.detail_name.setText(f"[{d['symbol']}] {d['name']}")
 
         score = d['score']
         self.detail_score_val.setText(f"{score:.1f}")
@@ -344,6 +369,15 @@ class CryptoPage(QWidget):
         self._ind_labels['Stoch'].setText(f"{d['stoch']:.1f}")
         self._ind_labels['1M'].setText(f"{d['mom_1m']:+.1f}%")
 
+        # Update AI predictions
+        DIR_TEXT = {'UP': '▲ 상승', 'FLAT': '→ 횡보', 'DOWN': '▼ 하락'}
+        DIR_COLOR = {'UP': '#006400', 'FLAT': '#555555', 'DOWN': '#cc0000'}
+        for key, field in [('5d', 'lstm_dir_5d'), ('20d', 'lstm_dir_20d'), ('60d', 'lstm_dir_60d')]:
+            direction = d.get(field, 'FLAT')
+            lbl = self._pred_labels[key]
+            lbl.setText(DIR_TEXT.get(direction, direction))
+            lbl.setStyleSheet(f'font-size: 14px; font-weight: 800; color: {DIR_COLOR.get(direction, "#555555")};')
+
         price = d['price']
         if price >= 1000:
             self.price_lbl.setText(f"현재가: ${price:,.0f}")
@@ -356,7 +390,7 @@ class CryptoPage(QWidget):
         history = d.get('history')
         if history is not None and not history.empty:
             self.chart._active_period = 'All'
-            self.chart.plot(history, ticker)
+            self.chart.plot(history, ticker, forecast=d.get('forecast'))
 
         self.buy_btn.setEnabled(True)
         self.sell_btn.setEnabled(True)

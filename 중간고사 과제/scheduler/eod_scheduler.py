@@ -71,8 +71,7 @@ class EODScheduler:
             tickers = all_tickers[:count]
             
             end_date = datetime.now().strftime('%Y-%m-%d')
-            # Get last 60 days to ensure enough data for indicators
-            start_date = (datetime.now().replace(day=1) - datetime.timedelta(days=60)).strftime('%Y-%m-%d')
+            start_date = (datetime.now() - timedelta(days=60)).strftime('%Y-%m-%d')
             
             collector.collect_ohlcv(tickers, start=start_date, end=end_date, db_session=self.db_session)
             print(f"[{datetime.now()}] Step 1 Completed: Collected data for {len(tickers)} tickers.")

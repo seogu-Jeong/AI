@@ -349,7 +349,7 @@ class ScreeningPage(QWidget):
         search = self.search_input.text().strip().upper()
         signal_filter = self.signal_combo.currentText()
 
-        self.worker = ScreeningWorker(n=100, signal_filter=signal_filter, search=search)
+        self.worker = ScreeningWorker(n=503, signal_filter=signal_filter, search=search)
         self.worker.finished.connect(self.on_data_loaded)
         self.worker.error.connect(self.on_error)
         self.worker.start()

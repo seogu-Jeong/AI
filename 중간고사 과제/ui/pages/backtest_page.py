@@ -324,15 +324,12 @@ class BacktestPage(QWidget):
         self.status_lbl.setText('')
 
         if result.get('error'):
-            self.status_lbl.setText(f"Error: {result['error']}")
+            self.status_lbl.setText(f"오류: {result['error']}")
+            self.status_lbl.setStyleSheet("color: #cc0000; font-weight: bold;")
             return
 
-        if result.get('demo'):
-            self.status_lbl.setText('데모 모드 (AI 분석 데이터 없음 - SPY/QQQ 기반 시뮬레이션)')
-            self.status_lbl.setStyleSheet("color: #FF8C00; font-weight: bold;")
-        else:
-            self.status_lbl.setText('')
-            self.status_lbl.setStyleSheet('')
+        self.status_lbl.setText('')
+        self.status_lbl.setStyleSheet('')
 
         # Update Stat Cards
         self.card_return.findChild(QLabel, 'val').setText(f"{result['total_return']:.1f}%")

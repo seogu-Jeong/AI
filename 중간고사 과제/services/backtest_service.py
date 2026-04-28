@@ -19,27 +19,32 @@ class BacktestService:
             ).all()
             
             if not scores_query:
-                return BacktestService._run_demo_backtest(start_date, end_date)
-                
+                # 데이터 없을 때 실제 가용 범위 조회
+                any_score = db_session.query(AIScore).order_by(AIScore.date.asc()).first()
+                last_score = db_session.query(AIScore).order_by(AIScore.date.desc()).first()
+                if any_score and last_score:
+                    return {'error': f"선택한 기간에 AI Score 데이터가 없습니다.\n실제 데이터 범위: {any_score.date} ~ {last_score.date}"}
+                return {'error': 'AI Score 데이터가 없습니다. 먼저 스크리닝을 실행해 데이터를 생성하세요.'}
+
             df_scores = pd.DataFrame([{
                 'ticker': s.ticker,
                 'date': s.date,
                 'ensemble_score': s.ensemble_score
             } for s in scores_query])
-            
+
             df_scores['date'] = pd.to_datetime(df_scores['date'])
-            
+
             # 2. Identify rebalancing dates (first available date of each month)
             distinct_dates = sorted(df_scores['date'].unique())
             if len(distinct_dates) < 2:
-                return BacktestService._run_demo_backtest(start_date, end_date)
-                
+                return {'error': '최소 2개 이상의 날짜 데이터가 필요합니다. 기간을 늘려주세요.'}
+
             df_dates = pd.DataFrame({'date': distinct_dates})
             df_dates['month'] = df_dates['date'].dt.to_period('M')
             rebalance_dates = df_dates.groupby('month')['date'].min().sort_values().tolist()
-            
+
             if len(rebalance_dates) < 2:
-                return BacktestService._run_demo_backtest(start_date, end_date)
+                return {'error': '최소 2개월 이상의 데이터가 필요합니다. 기간을 늘려주세요.'}
                 
             # 3. Initialize simulation variables
             portfolio_curve = [1.0]

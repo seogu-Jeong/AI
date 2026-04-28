@@ -609,10 +609,22 @@ class DetailPage(QWidget):
             def get_epct(d, days):
                 mult = 1.0 if d.upper() in ['UP', 'BUY'] else (-1.0 if d.upper() in ['DOWN', 'SELL'] else 0.0)
                 return mult * sigma * np.sqrt(days) * 100
-            
-            self.f_box_5d.update_data(fc['dir_5d'], get_epct(fc['dir_5d'], 5), fc['mlp_buy_prob'])
-            self.f_box_20d.update_data(fc['dir_20d'], get_epct(fc['dir_20d'], 20), fc['mlp_buy_prob'])
-            self.f_box_60d.update_data(fc['dir_60d'], get_epct(fc['dir_60d'], 45), fc['mlp_buy_prob'])
+
+            def dir_to_prob(direction, base):
+                d = (direction or 'FLAT').upper()
+                if d in ('UP', 'BUY'):
+                    return min(0.85, base + 0.2)
+                elif d in ('DOWN', 'SELL'):
+                    return max(0.15, base - 0.2)
+                return 0.50
+
+            base = fc.get('mlp_buy_prob', 0.5)
+            self.f_box_5d.update_data(fc['dir_5d'], get_epct(fc['dir_5d'], 5),
+                fc.get('up_5d', dir_to_prob(fc['dir_5d'], base)))
+            self.f_box_20d.update_data(fc['dir_20d'], get_epct(fc['dir_20d'], 20),
+                fc.get('up_20d', dir_to_prob(fc['dir_20d'], base)))
+            self.f_box_60d.update_data(fc['dir_60d'], get_epct(fc['dir_60d'], 45),
+                fc.get('up_60d', dir_to_prob(fc['dir_60d'], base)))
 
         history = data.get('history')
         forecast = data.get('forecast')

@@ -55,11 +55,14 @@ class ScreeningService:
             prev_close = prev_price_map.get(score.ticker, close_price)
             price_change_pct = (close_price - prev_close) / prev_close * 100 if prev_close > 0 else 0.0
 
+            score_val = round(score.ensemble_score, 2)
+            derived_signal = 'Buy' if score_val >= 70 else ('Hold' if score_val >= 50 else 'Sell')
+
             output.append({
                 "rank": i + 1,
                 "ticker": score.ticker,
-                "ensemble_score": round(score.ensemble_score, 2),
-                "mlp_signal": score.mlp_signal,
+                "ensemble_score": score_val,
+                "mlp_signal": derived_signal,
                 "lstm_dir_5d": score.lstm_dir_5d,
                 "cnn_pattern": score.cnn_pattern,
                 "close_price": close_price,

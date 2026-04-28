@@ -51,3 +51,7 @@ htmlcov/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Private files
+중간고사\ 과제/PRESENTATION_SCRIPT.md
+PRESENTATION_SCRIPT.md

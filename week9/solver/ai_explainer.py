@@ -39,10 +39,19 @@ SYSTEM_PROMPT = r"""
 학생들이 시뮬레이션 결과를 통해 물리적 직관을 얻을 수 있도록 도와주세요.
 """
 
+from solver.template_explainer import explain as template_explain
+
 def explain(results: Dict[str, Any], topic: str, params: Dict[str, Any]) -> str:
     """
-    Generates a professional Korean physics explanation of computed results using Claude.
+    Generates a professional Korean physics explanation of computed results.
+    Tries template-based explainer first, falls back to Claude API.
     """
+    # Always use template (free, instant, consistent quality)
+    try:
+        return template_explain(results, topic, params)
+    except Exception:
+        pass
+
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     default_text = DEFAULT_EXPLANATIONS.get(topic, "시뮬레이션 분석 결과입니다.")
     

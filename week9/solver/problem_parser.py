@@ -3,17 +3,7 @@ import json
 import anthropic
 from typing import Dict, Any
 
-# Default parameters for each topic
-DEFAULTS = {
-    'euler_rk4': {'omega': 2.0, 'dt': 0.05, 't_end': 10.0, 'x0': 1.0, 'v0': 0.0},
-    'planetary': {'semi_major_axis': 1.0, 'eccentricity': 0.2, 'mass_star': 1.989e30},
-    'double_pendulum': {
-        'theta1_deg': 120.0, 'theta2_deg': -30.0, 
-        'l1': 1.0, 'l2': 1.0, 'm1': 1.0, 'm2': 1.0, 
-        't_end': 20.0, 'compare_chaos': True
-    },
-    'lagrangian': {'length': 1.0, 'mass': 1.0, 'theta0_deg': 60.0, 'omega0': 0.0, 't_end': 10.0}
-}
+from solver.defaults import DEFAULTS
 
 SYSTEM_PROMPT = r"""
 You are a highly precise physics parameter extraction engine. Your goal is to analyze natural language descriptions of classical mechanics problems and extract numerical parameters required for computational solvers.
@@ -69,15 +59,23 @@ Precision is paramount. If a user says "half a second step", set dt=0.5. If they
 Ensure the JSON is strictly formatted.
 """
 
+from solver.rule_parser import extract as rule_extract
+
 def parse(problem_text: str, topic: str) -> Dict[str, Any]:
     """
-    Extracts numerical parameters from natural language physics problem text using Claude.
+    Extracts numerical parameters from natural language physics problem text.
+    Tries rule-based parser first, falls back to Claude API.
     """
+    # Try rule-based first (free, instant)
+    params, confidence = rule_extract(problem_text, topic)
+    if confidence >= 0.7:
+        return params  # Good enough — skip API
+
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     defaults = DEFAULTS.get(topic, {})
     
     if not api_key:
-        return defaults
+        return params # Return what we got from rule parser if no API key
 
     try:
         client = anthropic.Anthropic(api_key=api_key)

@@ -34,7 +34,7 @@ app.include_router(router)
 @app.get("/")
 async def read_index(request: Request):
     # Ensure index.html exists or handle missing
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html")
 
 @app.get("/health")
 async def health_check():

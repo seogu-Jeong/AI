@@ -1,0 +1,8 @@
+fastapi>=0.115
+uvicorn[standard]>=0.32
+numpy>=2.0
+scipy>=1.14
+plotly>=5.24
+anthropic>=0.40
+python-dotenv>=1.0
+jinja2>=3.1

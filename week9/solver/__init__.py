@@ -1,4 +1,1 @@
-from . import euler_rk4
-from . import planetary
-from . import double_pendulum
-from . import lagrangian
+# Lazy imports are used in the application to prevent startup crashes.

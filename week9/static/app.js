@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const explanationContent = document.getElementById('explanation-content');
     const paramsContent = document.getElementById('params-content');
     const explanationSection = document.getElementById('explanation-section');
+    
+    const apiBanner = document.getElementById('api-banner');
+    const apiBadge = document.getElementById('api-badge');
+    const apiKeySection = document.getElementById('api-key-section');
+    const apiKeyInput = document.getElementById('api-key-input');
+    const saveApiKeyBtn = document.getElementById('save-api-key-btn');
 
     // Tab Handlers
     tabBtns.forEach(btn => {
@@ -46,6 +52,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Solve Button Handler
     solveBtn.addEventListener('click', solveProblem);
 
+    // Save API Key Handler
+    saveApiKeyBtn.addEventListener('click', async () => {
+        const key = apiKeyInput.value.trim();
+        if (!key) return;
+
+        try {
+            const response = await fetch('/set-api-key', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ key: key })
+            });
+            if (response.ok) {
+                apiKeySection.style.display = 'none';
+                apiBanner.style.display = 'none';
+                solveProblem();
+            }
+        } catch (error) {
+            console.error('Failed to set API key:', error);
+        }
+    });
+
     function updateExamples(topic) {
         exampleBtns.forEach(btn => {
             if (btn.getAttribute('data-topic') === topic) {
@@ -69,6 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setLoading(true);
         showStatus('AI가 파라미터를 추출하고 계산 중...', 'success');
+        apiBadge.style.display = 'none';
+        apiBanner.style.display = 'none';
 
         try {
             const response = await fetch('/solve', {
@@ -95,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderChart(result.plotly_json);
                 renderExplanation(result.explanation);
                 renderParams(result.parameters, result.steps);
+                handleApiFeedback(result);
             }
 
         } catch (error) {
@@ -102,6 +132,23 @@ document.addEventListener('DOMContentLoaded', () => {
             showStatus(`통신 오류가 발생했습니다: ${error.message}`, 'error');
         } finally {
             setLoading(false);
+        }
+    }
+
+    function handleApiFeedback(result) {
+        if (result.api_needed && !result.api_used) {
+            apiBanner.textContent = '입력이 모호하여 기본값으로 계산했습니다. API 키를 입력하면 자연어를 정확히 해석합니다.';
+            apiBanner.className = 'banner warning';
+            apiBanner.style.display = 'block';
+            apiKeySection.style.display = 'block';
+        } else if (result.api_used) {
+            apiBadge.textContent = 'Claude AI 사용됨';
+            apiBadge.className = 'badge success';
+            apiBadge.style.display = 'inline-block';
+        } else if (!result.api_needed) {
+            apiBadge.textContent = 'API 없이 계산됨';
+            apiBadge.className = 'badge info';
+            apiBadge.style.display = 'inline-block';
         }
     }
 

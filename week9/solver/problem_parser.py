@@ -1,9 +1,16 @@
 import os
 import json
-import anthropic
-from typing import Dict, Any
+import logging
+from typing import Dict, Any, Tuple
 
 from solver.defaults import DEFAULTS
+from solver.rule_parser import extract as rule_extract
+
+# Try to import anthropic, but don't crash if it's not installed
+try:
+    import anthropic
+except ImportError:
+    anthropic = None
 
 SYSTEM_PROMPT = r"""
 You are a highly precise physics parameter extraction engine. Your goal is to analyze natural language descriptions of classical mechanics problems and extract numerical parameters required for computational solvers.
@@ -59,23 +66,34 @@ Precision is paramount. If a user says "half a second step", set dt=0.5. If they
 Ensure the JSON is strictly formatted.
 """
 
-from solver.rule_parser import extract as rule_extract
+def is_api_key_valid(api_key: str) -> bool:
+    """Check if the API key looks valid."""
+    if not api_key:
+        return False
+    if api_key == "your_key_here":
+        return False
+    return api_key.startswith(('sk-', 'ghp')) or len(api_key) > 20
 
-def parse(problem_text: str, topic: str) -> Dict[str, Any]:
+def parse(problem_text: str, topic: str) -> Tuple[Dict[str, Any], bool]:
     """
     Extracts numerical parameters from natural language physics problem text.
-    Tries rule-based parser first, falls back to Claude API.
+    Tries rule-based parser first, falls back to Claude API if confidence is low.
+    Returns (params, api_used).
     """
     # Try rule-based first (free, instant)
     params, confidence = rule_extract(problem_text, topic)
     if confidence >= 0.7:
-        return params  # Good enough — skip API
+        return params, False
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    defaults = DEFAULTS.get(topic, {})
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+    defaults = DEFAULTS.get(topic, {}).copy()
     
-    if not api_key:
-        return params # Return what we got from rule parser if no API key
+    # Check if we should use API
+    if not is_api_key_valid(api_key) or anthropic is None:
+        # If no API key or no anthropic lib, merge rule-parsed params with defaults and return
+        result = defaults.copy()
+        result.update(params)
+        return result, False
 
     try:
         client = anthropic.Anthropic(api_key=api_key)
@@ -105,13 +123,16 @@ def parse(problem_text: str, topic: str) -> Dict[str, Any]:
         elif "{" in extracted_text:
             extracted_text = extracted_text[extracted_text.find("{"):extracted_text.rfind("}")+1]
             
-        params = json.loads(extracted_text)
+        api_params = json.loads(extracted_text)
         
         # Merge with defaults
         result = defaults.copy()
-        result.update(params)
-        return result
+        result.update(api_params)
+        return result, True
         
-    except Exception:
-        # On ANY error, return defaults silently
-        return defaults
+    except Exception as e:
+        logging.warning(f"Claude API extraction failed: {e}")
+        # On ANY error, return rule-parsed results merged with defaults
+        result = defaults.copy()
+        result.update(params)
+        return result, False

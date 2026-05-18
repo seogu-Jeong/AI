@@ -1,6 +1,14 @@
 import os
-import anthropic
-from typing import Dict, Any
+import logging
+from typing import Dict, Any, Tuple
+
+# Try to import anthropic, but don't crash if it's not installed
+try:
+    import anthropic
+except ImportError:
+    anthropic = None
+
+from solver.template_explainer import explain as template_explain
 
 DEFAULT_EXPLANATIONS = {
     'euler_rk4': "오일러 및 RK4 방법을 이용한 조화 진동자 시뮬레이션 결과입니다. 수치적 안정성과 에너지 보존 특성을 확인하세요.",
@@ -23,40 +31,36 @@ SYSTEM_PROMPT = r"""
   **물리적 의미**: 이 결과가 시사하는 물리학적 통찰
 - **제한**: 400단어 이내로 간결하면서도 깊이 있게 작성합니다.
 
-### 물리학적 배경 지식:
-1. **오일러 및 RK4 (euler_rk4)**:
-   단순 조화 진동자(Simple Harmonic Oscillator)는 고전역학의 초석입니다. 오일러 방법은 1차 근사로 에너지가 발산하는 경향이 있는 반면, Runge-Kutta 4차(RK4) 방법은 에너지를 훨씬 잘 보존합니다. 해밀토니안 보존 법칙을 언급하는 것이 좋습니다.
-
-2. **행성 운동 (planetary)**:
-   중력 법칙 $F = G M m / r^2$에 따른 케플러 궤도를 다룹니다. 이심률(Eccentricity)에 따른 궤도 모양 변화와 근일점/원일점에서의 속도 차이를 면적 속도 일정의 법칙(각운동량 보존)으로 설명합니다.
-
-3. **이중 진동자 (double_pendulum)**:
-   결정론적 혼돈(Deterministic Chaos)의 대표적 사례입니다. 라그랑주 역학을 통해 유도된 연립 비선형 미분 방정식을 풀며, 초기 조건의 미세한 차이가 결과의 거대한 차이를 만드는 '나비 효과'를 설명합니다. 리아푸노프 지수(Lyapunov exponent) 개념을 암시할 수 있습니다.
-
-4. **라그랑주 역학 (lagrangian)**:
-   뉴턴 역학의 벡터적 접근 대신 스칼라량인 에너지를 이용한 최소 작용의 원리(Principle of Least Action)를 강조합니다. 일반화 좌표(Generalized Coordinates)와 오일러-라그랑주 방정식 $\frac{d}{dt}\frac{\partial L}{\partial \dot{q}} - \frac{\partial L}{\partial q} = 0$의 우아함을 설명합니다.
-
-학생들이 시뮬레이션 결과를 통해 물리적 직관을 얻을 수 있도록 도와주세요.
+... (rest of prompt)
 """
 
-from solver.template_explainer import explain as template_explain
+def is_api_key_valid(api_key: str) -> bool:
+    """Check if the API key looks valid."""
+    if not api_key:
+        return False
+    if api_key == "your_key_here":
+        return False
+    return api_key.startswith(('sk-', 'ghp')) or len(api_key) > 20
 
-def explain(results: Dict[str, Any], topic: str, params: Dict[str, Any]) -> str:
+def explain(results: Dict[str, Any], topic: str, params: Dict[str, Any]) -> Tuple[str, bool]:
     """
     Generates a professional Korean physics explanation of computed results.
     Tries template-based explainer first, falls back to Claude API.
+    Returns (explanation, api_used).
     """
-    # Always use template (free, instant, consistent quality)
+    # Always try template first (free, instant, consistent quality)
     try:
-        return template_explain(results, topic, params)
-    except Exception:
-        pass
+        explanation = template_explain(results, topic, params)
+        if explanation:
+            return explanation, False
+    except Exception as e:
+        logging.warning(f"Template explanation failed: {e}")
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
     default_text = DEFAULT_EXPLANATIONS.get(topic, "시뮬레이션 분석 결과입니다.")
     
-    if not api_key:
-        return default_text
+    if not is_api_key_valid(api_key) or anthropic is None:
+        return default_text, False
 
     # Build a concise results summary (max 300 chars)
     numerical_summary = results.get('numerical_summary', {})
@@ -90,8 +94,9 @@ def explain(results: Dict[str, Any], topic: str, params: Dict[str, Any]) -> str:
             ]
         )
         
-        return response.content[0].text.strip()
+        return response.content[0].text.strip(), True
         
-    except Exception:
+    except Exception as e:
+        logging.warning(f"Claude API explanation failed: {e}")
         # On error, return default Korean explanation string
-        return default_text
+        return default_text, False

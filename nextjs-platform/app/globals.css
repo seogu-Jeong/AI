@@ -1,0 +1,431 @@
+@import "tailwindcss";
+
+/* ─── Windows 98 Design System ─────────────────────────────── */
+:root {
+  --w98-bg:         #c0c0c0;
+  --w98-light:      #ffffff;
+  --w98-dark:       #808080;
+  --w98-darker:     #404040;
+  --w98-black:      #000000;
+  --w98-navy:       #000080;
+  --w98-blue:       #1084d0;
+  --w98-teal:       #008080;
+  --w98-desktop:    #008080;
+  --w98-red:        #ff0000;
+  --w98-yellow:     #ffff00;
+  --w98-text:       #000000;
+  --w98-title-text: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'MS Sans Serif', Tahoma, 'Segoe UI', Arial, sans-serif;
+  font-size: 11px;
+  background-color: var(--w98-desktop);
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+  color: var(--w98-text);
+  min-height: 100vh;
+}
+
+/* ─── Bevel borders ─────────────────────────────────────────── */
+.win98-raised {
+  border-top:    2px solid var(--w98-light);
+  border-left:   2px solid var(--w98-light);
+  border-right:  2px solid var(--w98-dark);
+  border-bottom: 2px solid var(--w98-dark);
+}
+
+.win98-raised-outer {
+  border-top:    2px solid var(--w98-light);
+  border-left:   2px solid var(--w98-light);
+  border-right:  2px solid var(--w98-black);
+  border-bottom: 2px solid var(--w98-black);
+}
+
+.win98-sunken {
+  border-top:    2px solid var(--w98-dark);
+  border-left:   2px solid var(--w98-dark);
+  border-right:  2px solid var(--w98-light);
+  border-bottom: 2px solid var(--w98-light);
+}
+
+.win98-sunken-outer {
+  border-top:    2px solid var(--w98-black);
+  border-left:   2px solid var(--w98-black);
+  border-right:  2px solid var(--w98-light);
+  border-bottom: 2px solid var(--w98-light);
+}
+
+/* ─── Window ────────────────────────────────────────────────── */
+.win98-window {
+  background: var(--w98-bg);
+  border-top:    2px solid var(--w98-light);
+  border-left:   2px solid var(--w98-light);
+  border-right:  2px solid var(--w98-black);
+  border-bottom: 2px solid var(--w98-black);
+}
+
+.win98-window-inner {
+  border-top:    1px solid var(--w98-dark);
+  border-left:   1px solid var(--w98-dark);
+  border-right:  1px solid var(--w98-light);
+  border-bottom: 1px solid var(--w98-light);
+}
+
+/* ─── Title bar ─────────────────────────────────────────────── */
+.win98-title {
+  background: linear-gradient(to right, var(--w98-navy), var(--w98-blue));
+  color: var(--w98-title-text);
+  font-weight: bold;
+  font-size: 11px;
+  padding: 3px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  user-select: none;
+}
+
+.win98-title-inactive {
+  background: linear-gradient(to right, #808080, #b0b0b0);
+}
+
+/* Title bar buttons */
+.win98-title-btn {
+  width: 16px;
+  height: 14px;
+  background: var(--w98-bg);
+  border-top:    1px solid var(--w98-light);
+  border-left:   1px solid var(--w98-light);
+  border-right:  1px solid var(--w98-black);
+  border-bottom: 1px solid var(--w98-black);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: var(--w98-black);
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.win98-title-btn:active {
+  border-top:    1px solid var(--w98-dark);
+  border-left:   1px solid var(--w98-dark);
+  border-right:  1px solid var(--w98-light);
+  border-bottom: 1px solid var(--w98-light);
+}
+
+/* ─── Button ────────────────────────────────────────────────── */
+.win98-btn {
+  background: var(--w98-bg);
+  border-top:    2px solid var(--w98-light);
+  border-left:   2px solid var(--w98-light);
+  border-right:  2px solid var(--w98-black);
+  border-bottom: 2px solid var(--w98-black);
+  padding: 4px 12px;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  min-width: 75px;
+  text-align: center;
+  color: var(--w98-text);
+  white-space: nowrap;
+  outline: none;
+}
+.win98-btn:hover { background: #d4d0c8; }
+.win98-btn:active,
+.win98-btn.pressed {
+  border-top:    2px solid var(--w98-dark);
+  border-left:   2px solid var(--w98-dark);
+  border-right:  2px solid var(--w98-light);
+  border-bottom: 2px solid var(--w98-light);
+  padding: 5px 11px 3px 13px;
+}
+.win98-btn:disabled {
+  color: var(--w98-dark);
+  cursor: default;
+}
+.win98-btn:focus {
+  outline: 1px dotted var(--w98-black);
+  outline-offset: -4px;
+}
+
+/* Primary button (navy) */
+.win98-btn-primary {
+  background: var(--w98-navy);
+  color: var(--w98-title-text);
+  border-top:    2px solid #4444aa;
+  border-left:   2px solid #4444aa;
+  border-right:  2px solid #000033;
+  border-bottom: 2px solid #000033;
+}
+.win98-btn-primary:hover { background: #0000aa; }
+.win98-btn-primary:active {
+  border-top:    2px solid #000033;
+  border-left:   2px solid #000033;
+  border-right:  2px solid #4444aa;
+  border-bottom: 2px solid #4444aa;
+  padding: 5px 11px 3px 13px;
+}
+
+/* ─── Input / Textbox ───────────────────────────────────────── */
+.win98-input {
+  background: var(--w98-light);
+  border-top:    2px solid var(--w98-dark);
+  border-left:   2px solid var(--w98-dark);
+  border-right:  2px solid var(--w98-light);
+  border-bottom: 2px solid var(--w98-light);
+  padding: 2px 4px;
+  font-family: inherit;
+  font-size: 11px;
+  outline: none;
+  color: var(--w98-text);
+}
+
+/* ─── Separator ─────────────────────────────────────────────── */
+.win98-sep {
+  border-top: 1px solid var(--w98-dark);
+  border-bottom: 1px solid var(--w98-light);
+  margin: 4px 0;
+}
+
+/* ─── Status bar ────────────────────────────────────────────── */
+.win98-statusbar {
+  border-top: 1px solid var(--w98-dark);
+  background: var(--w98-bg);
+  padding: 2px 6px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.win98-status-panel {
+  border-top:   1px solid var(--w98-dark);
+  border-left:  1px solid var(--w98-dark);
+  border-right: 1px solid var(--w98-light);
+  border-bottom:1px solid var(--w98-light);
+  padding: 1px 6px;
+}
+
+/* ─── Progress bar ──────────────────────────────────────────── */
+.win98-progress-track {
+  background: var(--w98-light);
+  border-top:    1px solid var(--w98-dark);
+  border-left:   1px solid var(--w98-dark);
+  border-right:  1px solid var(--w98-light);
+  border-bottom: 1px solid var(--w98-light);
+  height: 16px;
+  overflow: hidden;
+}
+.win98-progress-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    to right,
+    var(--w98-navy) 0px,
+    var(--w98-navy) 8px,
+    var(--w98-blue) 8px,
+    var(--w98-blue) 16px
+  );
+}
+
+/* ─── List / Tree view ──────────────────────────────────────── */
+.win98-listbox {
+  background: var(--w98-light);
+  border-top:    2px solid var(--w98-dark);
+  border-left:   2px solid var(--w98-dark);
+  border-right:  2px solid var(--w98-light);
+  border-bottom: 2px solid var(--w98-light);
+  font-size: 11px;
+  overflow: auto;
+}
+.win98-listbox .item {
+  padding: 1px 4px;
+  cursor: default;
+}
+.win98-listbox .item.selected,
+.win98-listbox .item:hover {
+  background: var(--w98-navy);
+  color: var(--w98-title-text);
+}
+
+/* ─── Taskbar ───────────────────────────────────────────────── */
+.win98-taskbar {
+  background: var(--w98-bg);
+  border-top: 2px solid var(--w98-light);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  gap: 4px;
+  z-index: 100;
+}
+
+/* Start button */
+.win98-start {
+  background: var(--w98-bg);
+  border-top:    2px solid var(--w98-light);
+  border-left:   2px solid var(--w98-light);
+  border-right:  2px solid var(--w98-black);
+  border-bottom: 2px solid var(--w98-black);
+  padding: 2px 8px;
+  font-weight: bold;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+}
+.win98-start:active {
+  border-top:    2px solid var(--w98-dark);
+  border-left:   2px solid var(--w98-dark);
+  border-right:  2px solid var(--w98-light);
+  border-bottom: 2px solid var(--w98-light);
+}
+
+/* ─── Tooltip ───────────────────────────────────────────────── */
+.win98-tooltip {
+  background: #ffffe1;
+  border: 1px solid var(--w98-black);
+  padding: 2px 4px;
+  font-size: 11px;
+  pointer-events: none;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 16px; height: 16px; }
+::-webkit-scrollbar-track { background: var(--w98-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--w98-bg);
+  border-top:    2px solid var(--w98-light);
+  border-left:   2px solid var(--w98-light);
+  border-right:  2px solid var(--w98-dark);
+  border-bottom: 2px solid var(--w98-dark);
+}
+::-webkit-scrollbar-button {
+  background: var(--w98-bg);
+  border-top:    2px solid var(--w98-light);
+  border-left:   2px solid var(--w98-light);
+  border-right:  2px solid var(--w98-dark);
+  border-bottom: 2px solid var(--w98-dark);
+  display: block;
+  height: 16px;
+}
+
+/* ─── Desktop icon ──────────────────────────────────────────── */
+.win98-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  cursor: pointer;
+  width: 72px;
+  text-align: center;
+}
+.win98-icon:hover .icon-label,
+.win98-icon.selected .icon-label {
+  background: var(--w98-navy);
+  color: var(--w98-title-text);
+}
+.win98-icon .icon-label {
+  font-size: 11px;
+  word-break: break-word;
+  padding: 1px 2px;
+}
+
+/* ─── Tab control ───────────────────────────────────────────── */
+.win98-tab {
+  background: var(--w98-bg);
+  border-top:    2px solid var(--w98-light);
+  border-left:   2px solid var(--w98-light);
+  border-right:  2px solid var(--w98-dark);
+  border-bottom: none;
+  padding: 3px 12px 4px;
+  font-size: 11px;
+  cursor: pointer;
+  margin-bottom: -2px;
+  position: relative;
+  z-index: 1;
+}
+.win98-tab.active {
+  background: var(--w98-bg);
+  z-index: 2;
+  padding-bottom: 6px;
+}
+.win98-tab:not(.active) {
+  margin-top: 3px;
+  background: #b0b0b0;
+}
+
+/* ─── Code block ────────────────────────────────────────────── */
+.win98-code {
+  background: var(--w98-light);
+  border-top:    2px solid var(--w98-dark);
+  border-left:   2px solid var(--w98-dark);
+  border-right:  2px solid var(--w98-light);
+  border-bottom: 2px solid var(--w98-light);
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 11px;
+  padding: 8px;
+  overflow-x: auto;
+  line-height: 1.5;
+  color: var(--w98-black);
+}
+
+/* ─── Progress bar alias ────────────────────────────────────── */
+.win98-progress-bar {
+  height: 100%;
+  background: repeating-linear-gradient(
+    to right,
+    var(--w98-navy) 0px,
+    var(--w98-navy) 8px,
+    var(--w98-blue) 8px,
+    var(--w98-blue) 16px
+  );
+  transition: width 0.3s ease;
+}
+
+/* ─── Menu bar item hover ───────────────────────────────────── */
+.win98-menu-item:hover {
+  background: var(--w98-navy);
+  color: white;
+}
+
+/* ─── Misc ──────────────────────────────────────────────────── */
+.win98-checkbox {
+  accent-color: var(--w98-navy);
+  width: 13px;
+  height: 13px;
+}
+.win98-radio {
+  accent-color: var(--w98-navy);
+}
+.win98-select {
+  background: var(--w98-light);
+  border-top:    2px solid var(--w98-dark);
+  border-left:   2px solid var(--w98-dark);
+  border-right:  2px solid var(--w98-light);
+  border-bottom: 2px solid var(--w98-light);
+  font-family: inherit;
+  font-size: 11px;
+  padding: 2px;
+}
+
+/* Error/warning dialog icon color */
+.win98-error   { color: #cc0000; }
+.win98-warning { color: #cc6600; }
+.win98-info    { color: var(--w98-navy); }

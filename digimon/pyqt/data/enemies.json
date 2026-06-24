@@ -1,0 +1,186 @@
+{
+  "Kuwagamon": {
+    "hp": 180,
+    "atk": 45,
+    "def": 25,
+    "img": "https://digi-api.com/images/digimon/w/Kuwagamon.png",
+    "skills": [
+      {
+        "name": "Scissor Claw",
+        "power": 35
+      }
+    ],
+    "exp_yield": 40,
+    "drop": "HP Potion"
+  },
+  "Shellmon": {
+    "hp": 220,
+    "atk": 50,
+    "def": 55,
+    "img": "https://digi-api.com/images/digimon/w/Shellmon.png",
+    "skills": [
+      {
+        "name": "Hydro Blaster",
+        "power": 40
+      }
+    ],
+    "exp_yield": 50,
+    "drop": "HP Potion"
+  },
+  "Seadramon": {
+    "hp": 350,
+    "atk": 55,
+    "def": 50,
+    "img": "https://digi-api.com/images/digimon/w/Seadramon.png",
+    "skills": [
+      {
+        "name": "Ice Blast",
+        "power": 45
+      }
+    ],
+    "exp_yield": 80,
+    "drop": "Mega Potion"
+  },
+  "Gazimon": {
+    "hp": 300,
+    "atk": 70,
+    "def": 50,
+    "img": "https://digi-api.com/images/digimon/w/Gazimon.png",
+    "skills": [
+      {
+        "name": "Electric Stun",
+        "power": 60
+      }
+    ],
+    "exp_yield": 60,
+    "drop": "HP Potion"
+  },
+  "Flymon": {
+    "hp": 400,
+    "atk": 90,
+    "def": 40,
+    "img": "https://digi-api.com/images/digimon/w/Flymon.png",
+    "skills": [
+      {
+        "name": "Brown Sting",
+        "power": 70
+      }
+    ],
+    "exp_yield": 100,
+    "drop": "HP Potion"
+  },
+  "Bakemon": {
+    "hp": 380,
+    "atk": 85,
+    "def": 30,
+    "img": "https://digi-api.com/images/digimon/w/Bakemon.png",
+    "skills": [
+      {
+        "name": "Dark Claw",
+        "power": 80
+      }
+    ],
+    "exp_yield": 90
+  },
+  "Devimon": {
+    "hp": 800,
+    "atk": 110,
+    "def": 80,
+    "img": "https://digi-api.com/images/digimon/w/Devimon.png",
+    "skills": [
+      {
+        "name": "Death Claw",
+        "power": 100
+      }
+    ],
+    "exp_yield": 300,
+    "isBoss": true,
+    "drop": "Evo Shard"
+  },
+  "Etemon": {
+    "hp": 1200,
+    "atk": 180,
+    "def": 120,
+    "img": "https://digi-api.com/images/digimon/w/Etemon.png",
+    "skills": [
+      {
+        "name": "Dark Network",
+        "power": 150
+      }
+    ],
+    "exp_yield": 500,
+    "isBoss": true,
+    "drop": "Mega Potion"
+  },
+  "Myotismon": {
+    "hp": 2000,
+    "atk": 250,
+    "def": 180,
+    "img": "https://digi-api.com/images/digimon/w/Vamdemon.png",
+    "skills": [
+      {
+        "name": "Grisly Wing",
+        "power": 200
+      }
+    ],
+    "exp_yield": 800,
+    "isBoss": true,
+    "drop": "Evo Shard"
+  },
+  "Apocalymon": {
+    "hp": 8000,
+    "atk": 600,
+    "def": 500,
+    "img": "https://digi-api.com/images/digimon/w/Apocalymon.png",
+    "skills": [
+      {
+        "name": "Darkness Zone",
+        "power": 500
+      }
+    ],
+    "exp_yield": 10000,
+    "isBoss": true
+  },
+  "BlackWarGreymon": {
+    "hp": 3000,
+    "atk": 400,
+    "def": 300,
+    "img": "https://digi-api.com/images/digimon/w/BlackWarGreymon.png",
+    "skills": [
+      {
+        "name": "Terra Destroyer",
+        "power": 380
+      }
+    ],
+    "exp_yield": 2000,
+    "isBoss": true
+  },
+  "MaloMyotismon": {
+    "hp": 5000,
+    "atk": 550,
+    "def": 400,
+    "img": "https://digi-api.com/images/digimon/w/BelialVamdemon.png",
+    "skills": [
+      {
+        "name": "Crimson Mist",
+        "power": 450
+      }
+    ],
+    "exp_yield": 4000,
+    "isBoss": true
+  },
+  "Lucemon": {
+    "hp": 10000,
+    "atk": 800,
+    "def": 600,
+    "img": "https://digi-api.com/images/digimon/w/Lucemon.png",
+    "skills": [
+      {
+        "name": "Paradise Lost",
+        "power": 600
+      }
+    ],
+    "exp_yield": 20000,
+    "isBoss": true
+  }
+}

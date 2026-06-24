@@ -1,0 +1,967 @@
+{
+  "Agumon": {
+    "series": "Adventure",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Agumon.png",
+    "hp": 150,
+    "atk": 40,
+    "def": 25,
+    "skills": [
+      {
+        "name": "Pepper Breath",
+        "power": 30
+      }
+    ],
+    "evolve": "Greymon"
+  },
+  "Gabumon": {
+    "series": "Adventure",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Gabumon.png",
+    "hp": 160,
+    "atk": 38,
+    "def": 30,
+    "skills": [
+      {
+        "name": "Blue Blaster",
+        "power": 28
+      }
+    ],
+    "evolve": "Garurumon"
+  },
+  "Biyomon": {
+    "series": "Adventure",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Piyomon.png",
+    "hp": 140,
+    "atk": 42,
+    "def": 20,
+    "skills": [
+      {
+        "name": "Spiral Twister",
+        "power": 32
+      }
+    ],
+    "evolve": "Birdramon"
+  },
+  "Tentomon": {
+    "series": "Adventure",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Tentomon.png",
+    "hp": 145,
+    "atk": 35,
+    "def": 40,
+    "skills": [
+      {
+        "name": "Super Shocker",
+        "power": 25
+      }
+    ],
+    "evolve": "Kabuterimon"
+  },
+  "Palmon": {
+    "series": "Adventure",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Palmon.png",
+    "hp": 150,
+    "atk": 36,
+    "def": 35,
+    "skills": [
+      {
+        "name": "Poison Ivy",
+        "power": 28
+      }
+    ],
+    "evolve": "Togemon"
+  },
+  "Gomamon": {
+    "series": "Adventure",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Gomamon.png",
+    "hp": 180,
+    "atk": 34,
+    "def": 38,
+    "skills": [
+      {
+        "name": "Marching Fishes",
+        "power": 26
+      }
+    ],
+    "evolve": "Ikkakumon"
+  },
+  "Patamon": {
+    "series": "Adventure",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Patamon.png",
+    "hp": 130,
+    "atk": 45,
+    "def": 20,
+    "skills": [
+      {
+        "name": "Boom Bubble",
+        "power": 35
+      }
+    ],
+    "evolve": "Angemon"
+  },
+  "Gatomon": {
+    "series": "Adventure",
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Tailmon.png",
+    "hp": 250,
+    "atk": 80,
+    "def": 40,
+    "skills": [
+      {
+        "name": "Lightning Paw",
+        "power": 70
+      }
+    ],
+    "evolve": "Angewomon"
+  },
+  "Greymon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Greymon.png",
+    "hp": 350,
+    "atk": 80,
+    "def": 60,
+    "skills": [
+      {
+        "name": "Nova Blast",
+        "power": 65
+      }
+    ],
+    "evolve": "MetalGreymon"
+  },
+  "Garurumon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Garurumon.png",
+    "hp": 330,
+    "atk": 75,
+    "def": 65,
+    "skills": [
+      {
+        "name": "Howling Blaster",
+        "power": 60
+      }
+    ],
+    "evolve": "WereGarurumon"
+  },
+  "Birdramon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Birdramon.png",
+    "hp": 310,
+    "atk": 85,
+    "def": 50,
+    "skills": [
+      {
+        "name": "Meteor Wing",
+        "power": 70
+      }
+    ],
+    "evolve": "Garudamon"
+  },
+  "Kabuterimon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Kabuterimon.png",
+    "hp": 340,
+    "atk": 70,
+    "def": 80,
+    "skills": [
+      {
+        "name": "Electro Shocker",
+        "power": 60
+      }
+    ],
+    "evolve": "MegaKabuterimon"
+  },
+  "Togemon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Togemon.png",
+    "hp": 360,
+    "atk": 72,
+    "def": 55,
+    "skills": [
+      {
+        "name": "Needle Spray",
+        "power": 55
+      }
+    ],
+    "evolve": "Lillymon"
+  },
+  "Ikkakumon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Ikkakumon.png",
+    "hp": 400,
+    "atk": 70,
+    "def": 75,
+    "skills": [
+      {
+        "name": "Harpoon Torpedo",
+        "power": 65
+      }
+    ],
+    "evolve": "Zudomon"
+  },
+  "Angemon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Angemon.png",
+    "hp": 300,
+    "atk": 100,
+    "def": 50,
+    "skills": [
+      {
+        "name": "Hand of Fate",
+        "power": 90
+      }
+    ],
+    "evolve": "MagnaAngemon"
+  },
+  "MetalGreymon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/MetalGreymon.png",
+    "hp": 700,
+    "atk": 160,
+    "def": 120,
+    "skills": [
+      {
+        "name": "Giga Blaster",
+        "power": 130
+      }
+    ],
+    "evolve": "WarGreymon"
+  },
+  "WereGarurumon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/WereGarurumon.png",
+    "hp": 650,
+    "atk": 170,
+    "def": 110,
+    "skills": [
+      {
+        "name": "Wolf Claw",
+        "power": 120
+      }
+    ],
+    "evolve": "MetalGarurumon"
+  },
+  "Garudamon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/Garudamon.png",
+    "hp": 620,
+    "atk": 180,
+    "def": 100,
+    "skills": [
+      {
+        "name": "Wing Blade",
+        "power": 125
+      }
+    ],
+    "evolve": "Hououmon"
+  },
+  "MegaKabuterimon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/AtlurKabuterimon_(Red).png",
+    "hp": 680,
+    "atk": 150,
+    "def": 140,
+    "skills": [
+      {
+        "name": "Horn Buster",
+        "power": 115
+      }
+    ],
+    "evolve": "HerculesKabuterimon"
+  },
+  "Lillymon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/Lilimon.png",
+    "hp": 600,
+    "atk": 165,
+    "def": 95,
+    "skills": [
+      {
+        "name": "Flower Cannon",
+        "power": 120
+      }
+    ],
+    "evolve": "Rosemon"
+  },
+  "Zudomon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/Zudomon.png",
+    "hp": 750,
+    "atk": 155,
+    "def": 150,
+    "skills": [
+      {
+        "name": "Vulcan's Hammer",
+        "power": 130
+      }
+    ],
+    "evolve": "Vikemon"
+  },
+  "MagnaAngemon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/HolyAngemon.png",
+    "hp": 640,
+    "atk": 190,
+    "def": 110,
+    "skills": [
+      {
+        "name": "Gate of Destiny",
+        "power": 150
+      }
+    ],
+    "evolve": "Seraphimon"
+  },
+  "Angewomon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/Angewomon.png",
+    "hp": 620,
+    "atk": 185,
+    "def": 105,
+    "skills": [
+      {
+        "name": "Celestial Arrow",
+        "power": 145
+      }
+    ],
+    "evolve": "Ophanimon"
+  },
+  "WarGreymon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/WarGreymon.png",
+    "hp": 1500,
+    "atk": 350,
+    "def": 250,
+    "skills": [
+      {
+        "name": "Terra Force",
+        "power": 300
+      },
+      {
+        "name": "Great Tornado",
+        "power": 220
+      }
+    ],
+    "evolve": null
+  },
+  "MetalGarurumon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/MetalGarurumon.png",
+    "hp": 1400,
+    "atk": 330,
+    "def": 270,
+    "skills": [
+      {
+        "name": "Metal Wolf Claw",
+        "power": 280
+      },
+      {
+        "name": "Giga Missile",
+        "power": 210
+      }
+    ],
+    "evolve": null
+  },
+  "Hououmon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/Hououmon.png",
+    "hp": 1350,
+    "atk": 360,
+    "def": 230,
+    "skills": [
+      {
+        "name": "Starlight Explosion",
+        "power": 310
+      }
+    ],
+    "evolve": null
+  },
+  "HerculesKabuterimon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/HerakleKabuterimon.png",
+    "hp": 1450,
+    "atk": 320,
+    "def": 320,
+    "skills": [
+      {
+        "name": "Mega Electro Shocker",
+        "power": 290
+      }
+    ],
+    "evolve": null
+  },
+  "Rosemon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/Rosemon.png",
+    "hp": 1300,
+    "atk": 340,
+    "def": 240,
+    "skills": [
+      {
+        "name": "Forbidden Temptation",
+        "power": 295
+      }
+    ],
+    "evolve": null
+  },
+  "Vikemon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/Vikemon.png",
+    "hp": 1600,
+    "atk": 310,
+    "def": 350,
+    "skills": [
+      {
+        "name": "Arctic Blizzard",
+        "power": 285
+      }
+    ],
+    "evolve": null
+  },
+  "Seraphimon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/Seraphimon.png",
+    "hp": 1320,
+    "atk": 380,
+    "def": 240,
+    "skills": [
+      {
+        "name": "Seven Heavens",
+        "power": 330
+      }
+    ],
+    "evolve": null
+  },
+  "Ophanimon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/Ofanimon.png",
+    "hp": 1300,
+    "atk": 370,
+    "def": 250,
+    "skills": [
+      {
+        "name": "Eden's Javelin",
+        "power": 320
+      }
+    ],
+    "evolve": null
+  },
+  "Veemon": {
+    "series": "02",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/V-mon.png",
+    "hp": 160,
+    "atk": 45,
+    "def": 25,
+    "skills": [
+      {
+        "name": "V-Headbutt",
+        "power": 30
+      }
+    ],
+    "evolve": "ExVeemon"
+  },
+  "Hawkmon": {
+    "series": "02",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Hawkmon.png",
+    "hp": 140,
+    "atk": 40,
+    "def": 22,
+    "skills": [
+      {
+        "name": "Feather Slash",
+        "power": 28
+      }
+    ],
+    "evolve": "Aquilamon"
+  },
+  "Armadillomon": {
+    "series": "02",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Armadimon.png",
+    "hp": 180,
+    "atk": 35,
+    "def": 45,
+    "skills": [
+      {
+        "name": "Diamond Shell",
+        "power": 25
+      }
+    ],
+    "evolve": "Ankylomon"
+  },
+  "Wormmon": {
+    "series": "02",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Wormmon.png",
+    "hp": 130,
+    "atk": 42,
+    "def": 18,
+    "skills": [
+      {
+        "name": "Silk Thread",
+        "power": 26
+      }
+    ],
+    "evolve": "Stingmon"
+  },
+  "ExVeemon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/V-mon.png",
+    "hp": 380,
+    "atk": 85,
+    "def": 55,
+    "skills": [
+      {
+        "name": "V-Laser",
+        "power": 70
+      }
+    ],
+    "evolve": "Paildramon"
+  },
+  "Aquilamon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Aquilamon.png",
+    "hp": 320,
+    "atk": 78,
+    "def": 48,
+    "skills": [
+      {
+        "name": "Grand Horn",
+        "power": 65
+      }
+    ],
+    "evolve": "Silphymon"
+  },
+  "Ankylomon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Ankylomon.png",
+    "hp": 450,
+    "atk": 65,
+    "def": 85,
+    "skills": [
+      {
+        "name": "Tail Hammer",
+        "power": 60
+      }
+    ],
+    "evolve": "Shakkoumon"
+  },
+  "Stingmon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Stingmon.png",
+    "hp": 340,
+    "atk": 90,
+    "def": 40,
+    "skills": [
+      {
+        "name": "Spiking Strike",
+        "power": 75
+      }
+    ],
+    "evolve": "Paildramon"
+  },
+  "Paildramon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/Paildramon.png",
+    "hp": 750,
+    "atk": 180,
+    "def": 130,
+    "skills": [
+      {
+        "name": "Desperado Blaster",
+        "power": 150
+      }
+    ],
+    "evolve": "Imperialdramon"
+  },
+  "Silphymon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/Silphymon.png",
+    "hp": 680,
+    "atk": 175,
+    "def": 110,
+    "skills": [
+      {
+        "name": "Static Force",
+        "power": 140
+      }
+    ],
+    "evolve": "Valkyrimon"
+  },
+  "Shakkoumon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/Shakkoumon.png",
+    "hp": 900,
+    "atk": 140,
+    "def": 200,
+    "skills": [
+      {
+        "name": "Kachina Bombs",
+        "power": 120
+      }
+    ],
+    "evolve": "Vikemon"
+  },
+  "Imperialdramon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/Imperialdramon_Dragon_Mode.png",
+    "hp": 1600,
+    "atk": 400,
+    "def": 300,
+    "skills": [
+      {
+        "name": "Positron Laser",
+        "power": 350
+      },
+      {
+        "name": "Giga Death",
+        "power": 450
+      }
+    ],
+    "evolve": null
+  },
+  "Guilmon": {
+    "series": "Tamers",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Guilmon.png",
+    "hp": 170,
+    "atk": 50,
+    "def": 30,
+    "skills": [
+      {
+        "name": "Fire Ball",
+        "power": 35
+      }
+    ],
+    "evolve": "Growlmon"
+  },
+  "Terriermon": {
+    "series": "Tamers",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Terriermon.png",
+    "hp": 140,
+    "atk": 38,
+    "def": 28,
+    "skills": [
+      {
+        "name": "Bunny Blast",
+        "power": 30
+      }
+    ],
+    "evolve": "Gargomon"
+  },
+  "Renamon": {
+    "series": "Tamers",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Renamon.png",
+    "hp": 150,
+    "atk": 55,
+    "def": 20,
+    "skills": [
+      {
+        "name": "Diamond Storm",
+        "power": 40
+      }
+    ],
+    "evolve": "Kyubimon"
+  },
+  "Impmon": {
+    "series": "Tamers",
+    "level": "Rookie",
+    "img": "https://digi-api.com/images/digimon/w/Impmon.png",
+    "hp": 120,
+    "atk": 60,
+    "def": 15,
+    "skills": [
+      {
+        "name": "Bada Boom",
+        "power": 45
+      }
+    ],
+    "evolve": "Beelzemon"
+  },
+  "Growlmon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Growmon.png",
+    "hp": 400,
+    "atk": 100,
+    "def": 60,
+    "skills": [
+      {
+        "name": "Pyro Blaster",
+        "power": 85
+      }
+    ],
+    "evolve": "WarGrowlmon"
+  },
+  "Gargomon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Galgomon.png",
+    "hp": 380,
+    "atk": 85,
+    "def": 75,
+    "skills": [
+      {
+        "name": "Gargo Laser",
+        "power": 80
+      }
+    ],
+    "evolve": "Rapidmon"
+  },
+  "Kyubimon": {
+    "level": "Champion",
+    "img": "https://digi-api.com/images/digimon/w/Kyubimon.png",
+    "hp": 350,
+    "atk": 110,
+    "def": 45,
+    "skills": [
+      {
+        "name": "Dragon Wheel",
+        "power": 90
+      }
+    ],
+    "evolve": "Taomon"
+  },
+  "WarGrowlmon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/MegaloGrowmon.png",
+    "hp": 800,
+    "atk": 200,
+    "def": 150,
+    "skills": [
+      {
+        "name": "Atomic Blaster",
+        "power": 180
+      }
+    ],
+    "evolve": "Gallantmon"
+  },
+  "Rapidmon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/Rapidmon.png",
+    "hp": 750,
+    "atk": 180,
+    "def": 140,
+    "skills": [
+      {
+        "name": "Rapid Fire",
+        "power": 170
+      }
+    ],
+    "evolve": "MegaGargomon"
+  },
+  "Taomon": {
+    "level": "Ultimate",
+    "img": "https://digi-api.com/images/digimon/w/Taomon.png",
+    "hp": 700,
+    "atk": 220,
+    "def": 120,
+    "skills": [
+      {
+        "name": "Talisman Star",
+        "power": 190
+      }
+    ],
+    "evolve": "Sakuyamon"
+  },
+  "Gallantmon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/Dukemon.png",
+    "hp": 1800,
+    "atk": 450,
+    "def": 350,
+    "skills": [
+      {
+        "name": "Shield of the Just",
+        "power": 400
+      },
+      {
+        "name": "Lightning Joust",
+        "power": 380
+      }
+    ],
+    "evolve": null
+  },
+  "MegaGargomon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/SaintGalgomon.png",
+    "hp": 2000,
+    "atk": 420,
+    "def": 400,
+    "skills": [
+      {
+        "name": "Giant Missile",
+        "power": 420
+      }
+    ],
+    "evolve": null
+  },
+  "Sakuyamon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/Sakuyamon.png",
+    "hp": 1600,
+    "atk": 480,
+    "def": 300,
+    "skills": [
+      {
+        "name": "Spirit Strike",
+        "power": 440
+      }
+    ],
+    "evolve": null
+  },
+  "Beelzemon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/Beelzebumon.png",
+    "hp": 1700,
+    "atk": 500,
+    "def": 250,
+    "skills": [
+      {
+        "name": "Double Impact",
+        "power": 400
+      },
+      {
+        "name": "Corona Destroyer",
+        "power": 550
+      }
+    ],
+    "evolve": null
+  },
+  "Agunimon": {
+    "series": "Frontier",
+    "level": "Human Spirit",
+    "img": "https://digi-api.com/images/digimon/w/Agnimon.png",
+    "hp": 200,
+    "atk": 60,
+    "def": 40,
+    "skills": [
+      {
+        "name": "Pyro Punch",
+        "power": 50
+      }
+    ],
+    "evolve": "BurningGreymon"
+  },
+  "Lobomon": {
+    "series": "Frontier",
+    "level": "Human Spirit",
+    "img": "https://digi-api.com/images/digimon/w/Wolfmon.png",
+    "hp": 190,
+    "atk": 65,
+    "def": 35,
+    "skills": [
+      {
+        "name": "Lobo Kendo",
+        "power": 55
+      }
+    ],
+    "evolve": "KendoGarurumon"
+  },
+  "Kazemon": {
+    "series": "Frontier",
+    "level": "Human Spirit",
+    "img": "https://digi-api.com/images/digimon/w/Fairimon.png",
+    "hp": 180,
+    "atk": 55,
+    "def": 30,
+    "skills": [
+      {
+        "name": "Hurricane Wave",
+        "power": 45
+      }
+    ],
+    "evolve": "Zephyrmon"
+  },
+  "Beetlemon": {
+    "series": "Frontier",
+    "level": "Human Spirit",
+    "img": "https://digi-api.com/images/digimon/w/Blitzmon.png",
+    "hp": 220,
+    "atk": 50,
+    "def": 55,
+    "skills": [
+      {
+        "name": "Thunder Fist",
+        "power": 40
+      }
+    ],
+    "evolve": "MetalKabuterimon"
+  },
+  "Kumamon": {
+    "series": "Frontier",
+    "level": "Human Spirit",
+    "img": "https://digi-api.com/images/digimon/w/Chackmon.png",
+    "hp": 210,
+    "atk": 45,
+    "def": 60,
+    "skills": [
+      {
+        "name": "Blizzard Blaster",
+        "power": 42
+      }
+    ],
+    "evolve": "Korikakumon"
+  },
+  "BurningGreymon": {
+    "level": "Beast Spirit",
+    "img": "https://digi-api.com/images/digimon/w/Vritramon.png",
+    "hp": 450,
+    "atk": 110,
+    "def": 70,
+    "skills": [
+      {
+        "name": "Wildfire Tsunami",
+        "power": 100
+      }
+    ],
+    "evolve": "EmperorGreymon"
+  },
+  "KendoGarurumon": {
+    "level": "Beast Spirit",
+    "img": "https://digi-api.com/images/digimon/w/Garmmon.png",
+    "hp": 430,
+    "atk": 120,
+    "def": 65,
+    "skills": [
+      {
+        "name": "Lupine Laser",
+        "power": 105
+      }
+    ],
+    "evolve": "MagnaGarurumon"
+  },
+  "EmperorGreymon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/KaiserGreymon.png",
+    "hp": 2000,
+    "atk": 550,
+    "def": 400,
+    "skills": [
+      {
+        "name": "Dragonfire Crossbow",
+        "power": 500
+      }
+    ],
+    "evolve": null
+  },
+  "MagnaGarurumon": {
+    "level": "Mega",
+    "img": "https://digi-api.com/images/digimon/w/MagnaGarurumon.png",
+    "hp": 1900,
+    "atk": 520,
+    "def": 450,
+    "skills": [
+      {
+        "name": "Starlight Velocity",
+        "power": 480
+      }
+    ],
+    "evolve": null
+  }
+}

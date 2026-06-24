@@ -1,83 +1,55 @@
-# StockSense AI — AI 주식 분석 데스크탑 앱
+# 정석우 (Seogu Jeong) — 프로젝트 포트폴리오
 
-![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
-![PySide6](https://img.shields.io/badge/UI-PySide6-green.svg)
-![PyTorch](https://img.shields.io/badge/ML-PyTorch-ee4c2c.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-
-**StockSense AI**는 딥러닝 모델들을 활용하여 주식 및 암호화폐 시장을 분석하고 최적의 포트폴리오 전략을 제안하는 macOS 기반 데스크탑 애플리케이션입니다.
-
-StockSense AI is a macOS-based desktop application that analyzes stock and cryptocurrency markets using deep learning models and suggests optimal portfolio strategies.
+> 물리학과 재학 중 개인 및 팀 프로젝트로 개발한 소프트웨어 모음입니다.
 
 ---
 
-## 📸 Screenshots
-*(이곳에 실행 화면 스크린샷을 추가하세요)*
+## 프로젝트 목록
+
+### AI / 머신러닝
+
+| 폴더 | 설명 | 기술 스택 |
+|------|------|----------|
+| [`week2 hw/` ~ `week14/`](.) | AI&ML 강의 주차별 과제 (MIT 딥러닝 커리큘럼) | Python, PyTorch, Scikit-learn |
+| [`중간고사 과제/`](중간고사%20과제/) | 딥러닝 기반 주식 분석 데스크탑 앱 (StockSense AI) | Python, PySide6, LSTM/CNN/Transformer/RL |
+
+### 주식 / 금융
+
+| 폴더 | 설명 | 기술 스택 |
+|------|------|----------|
+| [`stocksenseai/`](stocksenseai/) | AI 기반 한국 주식 투자 플랫폼 (팀 프로젝트, hygrenn 협업) | FastAPI, React, PostgreSQL, Redis |
+| [`stock-terminal/`](stock-terminal/) | 터미널 기반 한국 주식 시세 조회 CLI | Python |
+
+### 웹 / 플랫폼
+
+| 폴더 | 설명 | 기술 스택 |
+|------|------|----------|
+| [`nextjs-platform/`](nextjs-platform/) | Next.js 14 풀스택 웹 플랫폼 (Vercel 배포) | Next.js, TypeScript, Tailwind CSS |
+| [`timetable-app/`](timetable-app/) | 대학교 시간표 관리 웹 앱 | TypeScript, Vite |
+
+### 게임
+
+| 폴더 | 설명 | 기술 스택 |
+|------|------|----------|
+| [`digimon/web/`](digimon/web/) | 바닐라 JS 디지몬 웹 게임 | HTML, CSS, JavaScript |
+| [`digimon/pyqt/`](digimon/pyqt/) | PyQt5 데스크탑 디지몬 게임 | Python, PyQt5 |
+
+### 음성인식
+
+| 폴더 | 설명 | 기술 스택 |
+|------|------|----------|
+| [`korean-stt/`](korean-stt/) | 한국어 음성→텍스트 변환 (M1 Mac 최적화) | Python, OpenAI Whisper |
 
 ---
 
-## ✨ Key Features (주요 기능)
+## 관련 저장소
 
-- **S&P500 AI Screening**: LSTM, CNN, Transformer, MLP 앙상블 모델을 통해 전 종목을 스캔하고 0~100점 사이의 투자 점수를 산출합니다.
-- **Stock Detail & XAI**: 캔들 차트 시각화 및 Attention Heatmap을 통한 설명 가능한 AI(XAI) 기능을 제공하여 모델의 판단 근거를 보여줍니다.
-- **Backtest Engine**: 상위 N개 종목을 매월 리밸런싱하는 전략의 수익률을 SPY 벤치마크와 비교 분석합니다.
-- **RL Portfolio Optimization**: REINFORCE 알고리즘을 사용하여 수익률 극대화를 위한 최적의 보유 종목 수를 결정합니다.
-- **Crypto Analysis**: BTC, ETH, SOL 등 주요 암호화폐에 대한 LSTM 기반 단기 예측 및 가상 투자(Paper Trading) 환경을 제공합니다.
+- **[seogu-Jeong/optics](https://github.com/seogu-Jeong/optics)** — 물리 광학 시뮬레이션 및 빔 스캐너 프로그램
+- **[hygrenn/FinalProject](https://github.com/hygrenn/FinalProject)** — StockSenseAI 메인 레포 (황윤광과 공동 개발)
 
 ---
 
-## 🚀 Quick Start (빠른 시작)
+## 연락처
 
-제공된 `install.sh` 스크립트를 사용하여 의존성 설치부터 앱 실행까지 한 번에 진행할 수 있습니다.
-
-```bash
-chmod +x install.sh
-./install.sh
-```
-
----
-
-## 🛠 Manual Installation (수동 설치)
-
-스크립트를 사용하지 않고 직접 설치하려면 다음 단계를 따르세요.
-
-1. **Repository Clone**
-   ```bash
-   git clone https://github.com/seogu-Jeong/AI.git
-   cd AI/middleterm/stocksense_ai
-   ```
-
-2. **Environment Setup** (Python 3.10+ 권장)
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
-
-3. **Install Dependencies**
-   ```bash
-   pip install --upgrade pip
-   pip install -r "중간고사 과제/requirements.txt"
-   ```
-
-4. **Run Application**
-   ```bash
-   python3 "중간고사 과제/main.py"
-   ```
-
----
-
-## 🧠 Tech Stack & Course Concepts
-
-본 프로젝트는 수강한 AI 및 머신러닝 강의의 핵심 개념들을 실제 금융 데이터에 적용하였습니다.
-
-- **Gradient Descent / Backprop**: 모든 딥러닝 모델의 가중치 최적화 및 학습에 기본적으로 적용.
-- **MLP + ReLU/Softmax**: 종목별 매수/보유/매도 확률 계산을 위한 다층 퍼셉트론 구조.
-- **CNN (Convolutional Neural Networks)**: 주가 캔들 차트의 이미지 패턴 인식을 통한 추세 분석.
-- **Transformer + Attention**: 시계열 데이터 내 요소별 중요도를 산출하고 XAI(Heatmap) 시각화에 활용.
-- **REINFORCE (RL)**: 보상을 기반으로 포트폴리오 구성 비중과 종목 수를 최적화하는 강화학습 에이전트.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
+- GitHub: [@seogu-Jeong](https://github.com/seogu-Jeong)
+- 소속: 부산대학교 물리학과

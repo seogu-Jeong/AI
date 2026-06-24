@@ -1,0 +1,78 @@
+QMainWindow {
+    background-color: #121212;
+}
+
+QWidget {
+    color: #E0E0E0;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Push Buttons */
+QPushButton {
+    background-color: #1E1E1E;
+    color: #4DB8FF;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #2D2D2D;
+    border: 1px solid #4DB8FF;
+    color: #FFFFFF;
+}
+
+QPushButton:pressed {
+    background-color: #4DB8FF;
+    color: #121212;
+}
+
+QPushButton:disabled {
+    background-color: #121212;
+    color: #555555;
+    border: 1px solid #222222;
+}
+
+/* Progress Bars (HP/EXP) */
+QProgressBar {
+    background-color: #2A2A2A;
+    border: 1px solid #111111;
+    border-radius: 4px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    height: 18px;
+}
+
+QProgressBar::chunk {
+    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #E53935, stop:1 #FF5252);
+    border-radius: 3px;
+}
+
+/* Labels */
+QLabel {
+    font-size: 14px;
+}
+
+/* Scroll Area for Digidex */
+QScrollArea {
+    border: none;
+    background-color: transparent;
+}
+
+QScrollBar:vertical {
+    border: none;
+    background: #1E1E1E;
+    width: 10px;
+    margin: 0px 0px 0px 0px;
+}
+QScrollBar::handle:vertical {
+    background: #4DB8FF;
+    min-height: 20px;
+    border-radius: 5px;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}

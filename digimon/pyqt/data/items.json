@@ -1,0 +1,17 @@
+{
+  "HP Potion": {
+    "type": "heal",
+    "value": 100,
+    "desc": "Heals 100 HP"
+  },
+  "Mega Potion": {
+    "type": "heal",
+    "value": 500,
+    "desc": "Heals 500 HP"
+  },
+  "Evo Shard": {
+    "type": "buff",
+    "value": 20,
+    "desc": "Increases ATK slightly (Battle)"
+  }
+}

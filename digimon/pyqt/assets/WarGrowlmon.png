@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="../../../favicon.png" />
+		<link rel="canonical" href="https://digi-api.com/" />
+		<meta name="viewport" content="width=device-width" />
+		
+		<link href="../../../_app/immutable/assets/0.7c70d3b0.css" rel="stylesheet">
+		<link href="../../../_app/immutable/assets/1.8190b974.css" rel="stylesheet"><title>DAPI: Digimon API</title><!-- HEAD_svelte-1bwed5o_START --><meta name="G_ANALYTICS_ID" content="G-QMQPRSQS27"><script async src="https://www.googletagmanager.com/gtag/js?id=G-QMQPRSQS27"></script><script>var url = document.querySelector('meta[name=G_ANALYTICS_ID]')
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			window.dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+		gtag('config', url.getAttribute('content'));
+	</script><!-- HEAD_svelte-1bwed5o_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">
+
+
+
+
+<header class="inner-padding svelte-gxrs95"><nav class="navbar svelte-gxrs95"><main class="svelte-gxrs95"><a href="/" class="logo svelte-gxrs95"><img src="/logo.png" alt="Logo" class="svelte-gxrs95"></a>
+            <button id="dropdown-button" class="svelte-gxrs95"><img src="/images/site/hamburger-menu.png" alt="dropdown-button" class="svelte-gxrs95"></button></main>
+        <ul class="navbar-links svelte-gxrs95"><li class="svelte-gxrs95"><a href="#docs" class="svelte-gxrs95">Documentation</a>    
+                </li><li class="svelte-gxrs95"><a href="#about" class="svelte-gxrs95">About</a>    
+                </li></ul></nav>
+</header>
+<main class="svelte-9aeaaq"><div class="container svelte-9aeaaq"><img src="/images/site/404.png" alt="" class="svelte-9aeaaq">
+        <div><h1>Error 404 - Page not found</h1>
+            <p>The current page does not exist.</p></div></div>
+</main>
+<section class="footer inner-margin svelte-1bw0s8a" id="footer"><div class="container inner-margin svelte-1bw0s8a"><a href="https://www.linkedin.com/in/vinícius-brito-costa/" target="_blank" rel="external" class="svelte-1bw0s8a"><img class="profile svelte-1bw0s8a" src="https://github.com/Vinicius-Brito-Costa.png" alt="Vinicius Brito Costa">
+                <h4 class="svelte-1bw0s8a">Vinicius Brito Costa</h4>
+                <span>Dev</span>
+            </a>
+        <p>Digimon and other media relating to the franchise are registered trademarks of Bandai.</p>
+        <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="external" class="svelte-1bw0s8a"><img class="cc svelte-1bw0s8a" src="/images/site/CC-BY-SA.png" alt="Creative Commons CC-BY-SA"></a></div></section>
+
+
+			
+			<script>
+				{
+					__sveltekit_1kxfnf9 = {
+						base: new URL("../../..", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("../../../_app/immutable/entry/start.198b6848.js"),
+						import("../../../_app/immutable/entry/app.c13960c1.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 1],
+							data,
+							form: null,
+							error: {message:"Not Found"},
+							status: 404
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>

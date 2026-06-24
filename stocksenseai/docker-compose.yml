@@ -1,0 +1,135 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-stocksense}
+      POSTGRES_USER: ${POSTGRES_USER:-stocksense}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-stocksense}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-stocksense}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+
+  db-init:
+    image: postgres:15-alpine
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGHOST: postgres
+      PGPORT: 5432
+      PGUSER: ${POSTGRES_USER:-stocksense}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-stocksense}
+      POSTGRES_DB: ${POSTGRES_DB:-stocksense}
+      POSTGRES_TEST_DB: ${POSTGRES_TEST_DB:-stocksense_test}
+    command: >
+      sh -c 'set -eu;
+      if createdb "$${POSTGRES_TEST_DB}" 2>/tmp/createdb.err; then
+        echo "Created database $${POSTGRES_TEST_DB}";
+      elif grep -q "already exists" /tmp/createdb.err; then
+        echo "Database $${POSTGRES_TEST_DB} already exists";
+      else
+        cat /tmp/createdb.err;
+        exit 1;
+      fi'
+
+  migrate:
+    build: ./backend
+    command: alembic upgrade head
+    working_dir: /project
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-stocksense}:${POSTGRES_PASSWORD:-stocksense}@postgres:5432/${POSTGRES_DB:-stocksense}
+    volumes:
+      - ./alembic.ini:/project/alembic.ini:ro
+      - ./db:/project/db:ro
+      - ./backend:/project/backend:ro
+
+  backend:
+    build: ./backend
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      POSTGRES_HOST: postgres
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-stocksense}:${POSTGRES_PASSWORD:-stocksense}@postgres:5432/${POSTGRES_DB:-stocksense}
+      TEST_DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-stocksense}:${POSTGRES_PASSWORD:-stocksense}@postgres:5432/${POSTGRES_TEST_DB:-stocksense_test}
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+
+  celery:
+    build: ./backend
+    command: celery -A tasks worker --loglevel=info
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      POSTGRES_HOST: postgres
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-stocksense}:${POSTGRES_PASSWORD:-stocksense}@postgres:5432/${POSTGRES_DB:-stocksense}
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./backend:/app
+
+  celery-beat:
+    build: ./backend
+    command: celery -A tasks beat --loglevel=info
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      POSTGRES_HOST: postgres
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-stocksense}:${POSTGRES_PASSWORD:-stocksense}@postgres:5432/${POSTGRES_DB:-stocksense}
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    command: npm run dev -- --host 0.0.0.0
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE: ${VITE_API_BASE:-http://localhost:8000}
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+
+volumes:
+  pgdata:
+  frontend_node_modules:

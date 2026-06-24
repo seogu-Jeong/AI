@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digimon Adventure RPG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="device">
+        <div id="screen">
+            <!-- Title Screen -->
+            <div id="screen-title" class="screen active">
+                <h1>DIGIMON RPG</h1>
+                <p>Press START</p>
+                <button id="btn-start" class="btn" style="margin-bottom: 10px;">START NEW</button>
+                <button id="btn-load" class="btn" style="display:none;">LOAD GAME</button>
+                <div style="margin-top: 20px; font-size: 8px;">
+                    <label><input type="checkbox" id="sound-toggle" checked> Sound/BGM (Click to Enable)</label>
+                </div>
+            </div>
+
+            <!-- Selection Screen -->
+            <div id="screen-select" class="screen">
+                <h2>Choose Your Partner!</h2>
+                <div id="selection-container"></div>
+            </div>
+
+            <!-- RPG Overworld Screen -->
+            <div id="screen-rpg" class="screen">
+                <canvas id="rpg-canvas" width="300" height="300"></canvas>
+                <div class="rpg-ui">
+                    <span id="map-name">File Island</span>
+                    <div id="player-status-mini">
+                        <img id="mini-sprite" src="" alt="">
+                        <div style="display:flex; flex-direction:column; gap:2px;">
+                            <span id="mini-name" style="font-weight:bold;">Agumon</span>
+                            <span id="mini-level">Lv. 1</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:2px;">
+                            <span id="mini-hp">HP: 100/100</span>
+                            <span id="mini-exp">EXP: 0/100</span>
+                        </div>
+                        <button id="btn-inv-rpg" class="btn" style="font-size:6px; padding:5px;">ITEM</button>
+                        <button id="btn-save" class="btn" style="font-size:6px; padding:5px; background:#2980b9;">SAVE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Battle Screen -->
+            <div id="screen-battle" class="screen">
+                <div id="evolution-overlay">
+                    <button id="btn-evolve" class="evo-btn">EVOLVE!</button>
+                </div>
+                <div class="fx-container"></div>
+                <div class="arena">
+                    <div class="side enemy-side">
+                        <div class="info-box">
+                            <span id="enemy-name" class="name">Enemy</span>
+                            <span id="enemy-level" class="hp-text" style="text-align:left;">Lv.?</span>
+                            <div class="hp-bar-container"><div id="enemy-hp-bar" class="hp-bar"></div></div>
+                            <span id="enemy-hp-text" class="hp-text">0/0</span>
+                        </div>
+                        <img id="enemy-img" class="sprite" src="" alt="Enemy">
+                    </div>
+                    <div class="side player-side">
+                        <img id="player-img" class="sprite" src="" alt="Player">
+                        <div class="info-box">
+                            <span id="player-name" class="name">Player</span>
+                            <span id="battle-player-level" class="hp-text" style="text-align:left;">Lv.1</span>
+                            <div class="hp-bar-container"><div id="player-hp-bar" class="hp-bar"></div></div>
+                            <span id="player-hp-text" class="hp-text">0/0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="battle-ui">
+                    <div id="battle-log" class="log"><p>Battle started!</p></div>
+                    <div class="actions"></div>
+                    <button id="btn-inv-battle" class="btn action-btn" style="margin-top:2px; font-size:6px; padding:5px;">Use Item</button>
+                </div>
+            </div>
+
+            <!-- Inventory Modal -->
+            <div id="inventory-modal" style="display:none; position:absolute; top:20px; left:20px; right:20px; bottom:20px; background:#e0f8d0; border:4px solid #0f380f; z-index:200; padding:10px; color:#0f380f;">
+                <h3 style="font-size:10px; border-bottom:2px solid #0f380f; margin-bottom:10px; padding-bottom:5px;">Inventory</h3>
+                <div id="inventory-list" style="font-size:8px; display:flex; flex-direction:column; gap:8px; height:75%; overflow-y:auto;"></div>
+                <p id="inv-empty-msg" style="font-size:8px; text-align:center;">Empty</p>
+                <button id="btn-close-inv" class="btn" style="position:absolute; bottom:10px; right:10px; font-size:8px; padding:5px;">Close</button>
+            </div>
+
+            <!-- End Screen -->
+            <div id="screen-end" class="screen">
+                <h1 id="end-title">Game Over</h1>
+                <p id="end-message"></p>
+                <button id="btn-continue" class="btn">Continue</button>
+            </div>
+        </div>
+
+        <div class="device-controls">
+            <div class="d-pad">
+                <button id="d-up" class="d-btn up"></button>
+                <button id="d-right" class="d-btn right"></button>
+                <button id="d-down" class="d-btn down"></button>
+                <button id="d-left" class="d-btn left"></button>
+            </div>
+            <div class="action-buttons">
+                <div class="round-btn red"></div>
+                <div class="round-btn blue"></div>
+            </div>
+        </div>
+    </div>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
